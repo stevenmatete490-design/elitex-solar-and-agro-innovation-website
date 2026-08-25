@@ -16,6 +16,7 @@ import {
   X,
   Zap,
 } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 import "./index.css";
 
 const whatsappNumber = "254759341122";
@@ -366,6 +367,7 @@ function App() {
           <p>Â© 2026 Elitex Solar & Agro Innovations Limited. All rights reserved.</p>
         </div>
       </footer>
+      <Analytics />
     </>
   );
 }
