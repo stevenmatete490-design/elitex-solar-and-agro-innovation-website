@@ -188,9 +188,7 @@ function App() {
         <section id="home" className="hero">
           <div className="hero-content container">
             <div className="hero-copy">
-              <span className="eyebrow"><Zap size={16} /> Smart energy. Sustainable solutions.</span>
               <h1>Powering homes, businesses <em>and farms</em> with smart solutions.</h1>
-              <p>Reliable solar solutions, water pumping systems, borehole drilling, and agro innovation for homes, businesses, farms, and communities.</p>
               <div className="hero-actions">
                 <button className="primary-btn" onClick={() => scrollToSection("contact")}>
                   Get a Free Consultation <ArrowRight size={19} />
@@ -199,11 +197,6 @@ function App() {
                   Explore Our Services
                 </button>
               </div>
-            </div>
-            <div className="hero-note">
-              <span>Built for real work</span>
-              <strong>Energy, water, agriculture.</strong>
-              <p>One practical partner for projects that need to perform.</p>
             </div>
           </div>
         </section>
