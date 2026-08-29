@@ -47,9 +47,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .logo { display: flex; align-items: center; flex: 0 0 auto; border: 0; background: transparent; }
 .logo-image { height: 44px; width: auto; max-width: 170px; object-fit: contain; object-position: left center; }
 .nav-links { display: flex; align-items: center; gap: clamp(18px, 2.4vw, 34px); margin-left: auto; }
-.nav-links button { min-height: 36px; padding: 0; border: 0; background: transparent; color: oklch(94% 0.012 145 / 0.78); font-size: 0.95rem; transition: color 220ms var(--ease-out); }
+.nav-links button { min-height: 36px; padding: 0; border: 0; background: transparent; color: oklch(94% 0.012 145 / 0.78); font-family: var(--display-font); font-weight: 700; font-size: clamp(1.05rem, 1.3vw, 1.2rem); transition: color 220ms var(--ease-out); }
 .nav-links button:hover { color: oklch(99% 0.005 145); }
-.nav-links button.is-active { color: var(--lime); font-weight: 700; }
+.nav-links button.is-active { color: var(--lime); font-weight: 800; }
 .nav-cta, .primary-btn, .white-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 22px; border: 0; border-radius: 999px; font-weight: 700; transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out), background 220ms var(--ease-out); }
 .nav-cta { margin-left: 4px; background: var(--lime); color: var(--forest-deep); }
 .nav-cta:hover, .primary-btn:hover, .white-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
