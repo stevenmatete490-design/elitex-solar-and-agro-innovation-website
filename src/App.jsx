@@ -367,13 +367,6 @@ function ServiceCarousel({ items, onAction }) {
       </div>
 
       <div className="showcase-stage">
-        <div key={index} className="showcase-info">
-          <span className="showcase-info-index">{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
-          <h3>{active.title}</h3>
-          <p>{active.description}</p>
-          <button onClick={onAction}>Talk to Us <ArrowRight size={16} /></button>
-        </div>
-
         <div
           className="showcase-visual"
           onMouseMove={handleVisualMove}
@@ -398,6 +391,13 @@ function ServiceCarousel({ items, onAction }) {
               />
             </div>
           ))}
+        </div>
+
+        <div key={index} className="showcase-info">
+          <span className="showcase-info-index">{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+          <h3>{active.title}</h3>
+          <p>{active.description}</p>
+          <button onClick={onAction}>Talk to Us <ArrowRight size={16} /></button>
         </div>
       </div>
     </div>

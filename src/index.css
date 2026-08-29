@@ -107,18 +107,21 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-tab.is-active { background: var(--forest-deep); color: oklch(98% 0.01 145); }
 .showcase-tab.is-active .showcase-tab-icon { opacity: 1; color: var(--lime); }
 
-.showcase-stage { position: relative; display: grid; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); align-items: center; gap: 48px; min-height: 560px; padding: 48px; border-radius: 32px; background: var(--forest-deep); overflow: hidden; box-shadow: var(--shadow-md); }
+/* The card is one full-bleed photo stage now: the image (in whatever
+   arrangement — solo, split, reel) fills the entire card, and the title,
+   description and CTA sit as a single top overlay on a consistent scrim,
+   rather than living in a separate side column with its own background. */
+.showcase-stage { position: relative; aspect-ratio: 16 / 8.2; min-height: 420px; border-radius: 32px; background: var(--forest-deep); overflow: hidden; box-shadow: var(--shadow-md); }
 .showcase-stage::before { content: ""; position: absolute; inset: auto -10% -30% 55%; z-index: 0; height: 65%; border-radius: 50%; background: oklch(78% 0.17 112 / 0.1); filter: blur(40px); pointer-events: none; }
 
-.showcase-info { position: relative; z-index: 1; color: oklch(98% 0.01 145); animation: showcaseInfoIn 550ms var(--ease-out); }
-.showcase-info-index { display: block; margin-bottom: 14px; color: var(--lime); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em; }
-.showcase-info h3 { margin-bottom: 14px; font-family: var(--display-font); font-weight: 800; font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.1; color: oklch(99% 0.005 145); }
-.showcase-info p { max-width: 34ch; margin-bottom: 22px; color: oklch(90% 0.012 145 / 0.72); font-size: 0.94rem; line-height: 1.65; }
-.showcase-info button { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border: 0; border-radius: 999px; background: var(--lime); color: var(--forest-deep); font-weight: 700; box-shadow: var(--shadow-sm); transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out); }
+.showcase-info { position: absolute; inset: 0 0 auto 0; z-index: 50; padding: 30px 40px 64px; color: oklch(98% 0.01 145); background: linear-gradient(180deg, oklch(8% 0.03 145 / 0.88) 0%, oklch(8% 0.03 145 / 0.58) 58%, transparent 100%); pointer-events: none; animation: showcaseInfoIn 550ms var(--ease-out); }
+.showcase-info-index { display: block; margin-bottom: 10px; color: var(--lime); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em; }
+.showcase-info h3 { margin-bottom: 10px; font-family: var(--display-font); font-weight: 800; font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.1; color: oklch(99% 0.005 145); }
+.showcase-info p { max-width: 56ch; margin-bottom: 18px; color: oklch(92% 0.012 145 / 0.82); font-size: 0.94rem; line-height: 1.6; }
+.showcase-info button { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border: 0; border-radius: 999px; background: var(--lime); color: var(--forest-deep); font-weight: 700; box-shadow: var(--shadow-sm); transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out); pointer-events: auto; }
 .showcase-info button:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-.showcase-visual { position: relative; z-index: 1; aspect-ratio: 4 / 3; border-radius: 22px; overflow: hidden; background: var(--forest); box-shadow: 0 30px 70px oklch(8% 0.03 145 / 0.45), 0 0 0 1px oklch(100% 0 0 / 0.06); transition: transform 150ms ease-out, box-shadow 400ms var(--ease-out); transform-style: preserve-3d; will-change: transform; }
-.showcase-visual:hover { box-shadow: 0 40px 90px oklch(8% 0.03 145 / 0.55), 0 0 0 1px oklch(100% 0 0 / 0.1); }
+.showcase-visual { position: absolute; inset: 0; z-index: 1; overflow: hidden; background: var(--forest-deep); transition: transform 150ms ease-out; transform-style: preserve-3d; will-change: transform; }
 .showcase-visual-glow { position: absolute; inset: -14%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, oklch(78% 0.17 112 / 0.28), transparent 72%); filter: blur(30px); pointer-events: none; }
 .showcase-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 750ms var(--ease-out); }
 .showcase-frame.is-active { opacity: 1; z-index: 1; }
@@ -235,8 +238,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .cta-content { align-items: flex-start; flex-direction: column; }
   .showcase-tabs { width: 100%; max-width: none; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .showcase-tab { padding: 10px 16px; font-size: 0.88rem; }
-  .showcase-stage { grid-template-columns: 1fr; gap: 28px; min-height: auto; padding: 32px; }
-  .showcase-visual { order: -1; aspect-ratio: 16 / 11; }
+  .showcase-stage { aspect-ratio: 4 / 3.3; min-height: 380px; }
+  .showcase-info { padding: 24px 28px 44px; }
   .showcase-info p { max-width: 52ch; }
   .stream-badge { font-size: 0.72rem; padding: 7px 12px 7px 7px; }
 }
@@ -257,9 +260,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .primary-btn, .secondary-btn { width: 100%; }
   .about-visual, .about-media { min-height: 410px; height: 410px; }
   .image-card { right: 15px; bottom: 15px; width: 205px; padding: 18px; }
-  .showcase-stage { padding: 22px; gap: 22px; }
-  .showcase-visual { aspect-ratio: 4 / 3; }
+  .showcase-stage { aspect-ratio: 3 / 3.9; min-height: 420px; border-radius: 24px; }
+  .showcase-info { padding: 20px 20px 34px; }
   .showcase-info h3 { font-size: 1.35rem; }
+  .showcase-info p { max-width: 40ch; font-size: 0.88rem; }
   .showcase-info button { padding: 11px 18px; }
   .stream-badge { left: 12px; bottom: 12px; font-size: 0.66rem; padding: 6px 11px 6px 6px; gap: 5px; }
   .stream-badge-icon { width: 18px; height: 18px; }
