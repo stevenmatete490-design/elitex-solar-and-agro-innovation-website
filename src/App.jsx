@@ -604,24 +604,78 @@ function App() {
           </div>
         </section>
 
-        <section id="why-us" className="section why-section">
-          <div className="container why-grid">
-            <div>
-              <span className="section-tag light-tag">Why Choose Elitex?</span>
-              <h2>Good engineering should feel simple.</h2>
-              <p>We bring technical judgment, practical experience, and dependable customer support to every project.</p>
+        <section id="why-us" className="section bento-section">
+          <div className="container">
+            <div className="bento-header">
+              <div>
+                <span className="section-tag">What You Get</span>
+                <h2>What you get with Elitex as a brand.</h2>
+                <p>From the first site visit to years of upkeep, one accredited team handles every step — so you never have to manage the project yourself.</p>
+              </div>
+              <button className="primary-btn bento-cta" onClick={() => scrollToSection("contact")}>
+                Get a Quote <ArrowRight size={19} />
+              </button>
             </div>
-            <div className="why-cards">
-              {[
-                ["01", "Professional Expertise", "Properly designed and professionally implemented solutions."],
-                ["02", "Tailored Solutions", "Every project is assessed individually before we recommend the right path forward."],
-                ["03", "Reliable Support", "Quality service before, during, and after your project."],
-              ].map(([number, title, text]) => (
-                <div className="why-card" key={number}>
-                  <strong>{number}</strong>
-                  <div><h3>{title}</h3><p>{text}</p></div>
+
+            <div className="bento-grid">
+              <div className="bento-card bento-card--light bento-card--tall">
+                <h3>Every service, ready to go</h3>
+                <p>Solar, water, boreholes, backup power, and agro innovation — seven services under one accredited team. Pick what your project needs.</p>
+                <div className="bento-tabs">
+                  <span className="bento-tab is-active">All</span>
+                  <span className="bento-tab">Solar</span>
+                  <span className="bento-tab">Water</span>
+                  <span className="bento-tab">Agro</span>
                 </div>
-              ))}
+                <div className="bento-thumb-grid">
+                  {[
+                    ["/images/solar-installation.jpeg", "Solar Installation", Sun],
+                    ["/images/water-pumps.jpeg", "Water Pumping", Droplets],
+                    ["/images/showcase/borehole-flowing.jpg", "Borehole Drilling", Wrench],
+                    ["/images/showcase/agro-drip-irrigation.jpg", "Agro Innovation", Leaf],
+                  ].map(([src, label, Icon]) => (
+                    <div className="bento-thumb" key={label}>
+                      <SafeImage sources={[src]} alt={label} className="bento-thumb-image" />
+                      <span className="bento-thumb-label"><Icon size={13} />{label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bento-card bento-card--dark">
+                <h3>One accredited team, every step</h3>
+                <p>From first site assessment to final commissioning and after-sales care — the same technicians see your project through, not a rotating crew.</p>
+                <div className="bento-flow">
+                  <SafeImage sources={["/images/elitex-engineers.jpg", "/images/elitex-engineers.jpeg"]} alt="Elitex engineering team" className="bento-flow-image" />
+                  <span className="bento-flow-chip bento-flow-chip--one">Assess</span>
+                  <span className="bento-flow-chip bento-flow-chip--two">Install</span>
+                  <span className="bento-flow-chip bento-flow-chip--three">Support</span>
+                </div>
+              </div>
+
+              <div className="bento-card bento-card--clay">
+                <h3>Every project, tailored</h3>
+                <p>Every project is assessed individually — homes, farms, and institutions each get a system sized and engineered for them.</p>
+                <div className="bento-project-chips">
+                  <div className="bento-project-chip">
+                    <SafeImage sources={["/images/project-result.jpeg"]} alt="Residential project" className="bento-project-image" />
+                    <span>Residential</span>
+                  </div>
+                  <div className="bento-project-chip">
+                    <SafeImage sources={["/images/showcase/agro-watering-cabbage.jpg"]} alt="Farm project" className="bento-project-image" />
+                    <span>Farm Project</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bento-card bento-card--sky">
+                <h3>Support that doesn't stop at install</h3>
+                <p>Maintenance, troubleshooting, and repairs — one call away whenever you need us.</p>
+                <div className="bento-support">
+                  <SafeImage sources={["/images/showcase/maintenance-technician-check.jpg"]} alt="Elitex maintenance technician" className="bento-support-image" />
+                  <button className="bento-bubble" onClick={() => scrollToSection("contact")}>Talk to Us</button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
