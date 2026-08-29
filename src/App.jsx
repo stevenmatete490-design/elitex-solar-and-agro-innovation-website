@@ -235,8 +235,8 @@ function App() {
           <div className="container">
             <div className="section-heading">
               <span className="section-tag">Our Services</span>
-              <h2>Practical help for the work that matters.</h2>
-              <p>From the first assessment to installation and after-sales support, we provide practical solutions designed around your needs.</p>
+              <h2>Offering affordable services with accredited technicians.</h2>
+              <p>From the first assessment to installation and after-sales support, our accredited technicians deliver quality work at prices that make sense for your budget.</p>
             </div>
             <div className="services-grid">
               {services.map((service, index) => (
