@@ -353,16 +353,16 @@ function App() {
                 className="hero-photo-img"
               />
             </div>
-            <div className="hero-photo-circle hero-photo-circle-md">
+            <div className="hero-photo-circle hero-photo-circle-md hero-photo-circle-product">
               <SafeImage
-                sources={["/images/showcase/water-pump-river.jpg"]}
+                sources={["/images/inverter.png"]}
                 alt=""
                 className="hero-photo-img"
               />
             </div>
-            <div className="hero-photo-circle hero-photo-circle-sm">
+            <div className="hero-photo-circle hero-photo-circle-sm hero-photo-circle-product">
               <SafeImage
-                sources={["/images/showcase/agro-drip-irrigation.jpg"]}
+                sources={["/images/solar.png"]}
                 alt=""
                 className="hero-photo-img"
               />
