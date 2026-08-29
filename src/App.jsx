@@ -176,7 +176,7 @@ function ServiceCarousel({ items, onAction }) {
 
   return (
     <div
-      className={paused ? "showcase-shell is-paused" : "showcase-shell"}
+      className={paused ? "showcase-carousel is-paused" : "showcase-carousel"}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -193,14 +193,11 @@ function ServiceCarousel({ items, onAction }) {
               onFocus={() => setPaused(true)}
               onBlur={() => setPaused(false)}
             >
-              <span className="showcase-tab-head">
-                <span className="showcase-tab-icon">{item.icon}</span>
-                <strong>{item.title}</strong>
-              </span>
-              {isActive && <span className="showcase-tab-desc">{item.description}</span>}
-              <span className="showcase-tab-track">
-                {isActive && <span key={index} className="showcase-tab-fill" />}
-              </span>
+              <span className="showcase-tab-icon">{item.icon}</span>
+              <span>{item.title}</span>
+              {isActive && (
+                <span key={index} className="showcase-tab-fill" />
+              )}
             </button>
           );
         })}
