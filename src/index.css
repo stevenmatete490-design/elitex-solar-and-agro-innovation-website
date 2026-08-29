@@ -268,9 +268,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .contact-items svg { flex: 0 0 auto; margin-top: 2px; color: var(--lime-dark); }
 .contact-items span { color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
 .contact-items strong { display: block; margin-bottom: 3px; color: var(--ink); }
-.contact-form { display: grid; gap: 14px; padding: clamp(22px, 4vw, 36px); border: 1px solid var(--line); border-radius: 20px; background: var(--soft); }
+.contact-form { display: grid; gap: 14px; padding: clamp(22px, 4vw, 36px); border: 1px solid transparent; border-radius: 20px; background: var(--paper); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.contact-form input, .contact-form select, .contact-form textarea { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); padding: 14px 15px; outline: 0; }
+.contact-form input, .contact-form select, .contact-form textarea { width: 100%; border: 1px solid transparent; border-radius: 12px; background: var(--soft); color: var(--ink); padding: 14px 15px; outline: 0; }
 .contact-form textarea { resize: vertical; min-height: 130px; }
 .contact-form input::placeholder, .contact-form textarea::placeholder { color: oklch(54% 0.02 110); }
 .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { border-color: var(--lime-dark); box-shadow: 0 0 0 3px oklch(78% 0.17 112 / 0.18); }
