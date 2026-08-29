@@ -32,7 +32,7 @@ img { display: block; max-width: 100%; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
 
 .container { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
-.section { padding: 112px 0; scroll-margin-top: 80px; }
+.section { padding: 112px 0; scroll-margin-top: 112px; }
 .section h2, .hero h1, .cta-content h2 { font-family: "Playfair Display", Georgia, serif; text-wrap: balance; }
 .section h2 { max-width: 720px; font-size: clamp(2.4rem, 5vw, 4.6rem); line-height: 1.04; letter-spacing: -0.04em; margin-bottom: 24px; }
 .section h2 em, .hero h1 em { color: var(--lime-dark); font-style: normal; }
@@ -40,19 +40,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .section-tag { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; color: var(--lime-dark); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
 .light-tag { color: var(--lime); }
 
-.navbar { position: fixed; inset: 0 0 auto; z-index: 20; background: oklch(17% 0.055 145 / 0.96); border-bottom: 1px solid oklch(100% 0 0 / 0.1); }
-.nav-container { min-height: 78px; display: flex; align-items: center; gap: 28px; }
+.navbar { position: fixed; inset: 0 0 auto; z-index: 20; background: transparent; padding-top: 18px; }
+.nav-container { min-height: 74px; display: flex; align-items: center; gap: 22px; background: oklch(17% 0.055 145 / 0.96); border: 1px solid oklch(100% 0 0 / 0.08); border-radius: 999px; padding: 8px 10px 8px 26px; box-shadow: var(--shadow-md); }
 .logo { display: flex; align-items: center; flex: 0 0 auto; border: 0; background: transparent; }
-.logo-image { height: 56px; width: auto; max-width: 190px; object-fit: contain; object-position: left center; }
-.nav-links { display: flex; align-items: center; gap: clamp(16px, 2.3vw, 32px); margin-left: auto; }
-.nav-links button { min-height: 44px; border: 0; background: transparent; color: oklch(96% 0.01 145); font-size: 0.9rem; transition: color 180ms var(--ease-out); }
-.nav-links button:hover { color: var(--lime); }
+.logo-image { height: 44px; width: auto; max-width: 170px; object-fit: contain; object-position: left center; }
+.nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; background: oklch(100% 0 0 / 0.05); padding: 6px; border-radius: 999px; }
+.nav-links button { min-height: 40px; padding: 0 18px; border: 0; border-radius: 999px; background: transparent; color: oklch(90% 0.012 145 / 0.72); font-size: 0.9rem; transition: background 220ms var(--ease-out), color 220ms var(--ease-out); }
+.nav-links button:hover { color: oklch(98% 0.01 145); }
+.nav-links button.is-active { background: var(--lime); color: var(--forest-deep); font-weight: 700; }
 .nav-cta, .primary-btn, .white-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 21px; border: 0; border-radius: 9px; font-weight: 700; transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out), background 220ms var(--ease-out); }
-.nav-cta { margin-left: 4px; background: var(--lime); color: var(--forest-deep); }
+.nav-cta { margin-left: 4px; border-radius: 999px; background: var(--lime); color: var(--forest-deep); }
 .nav-cta:hover, .primary-btn:hover, .white-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
 .menu-button { display: none; min-width: 44px; min-height: 44px; margin-left: auto; border: 0; background: transparent; color: oklch(98% 0.01 145); }
 
-.hero { position: relative; min-height: 730px; display: flex; align-items: center; padding: 120px 0 72px; isolation: isolate; background: var(--forest-deep); color: oklch(98% 0.01 145); overflow: hidden; }
+.hero { position: relative; min-height: 730px; display: flex; align-items: center; padding: 136px 0 72px; isolation: isolate; background: var(--forest-deep); color: oklch(98% 0.01 145); overflow: hidden; }
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background-image: linear-gradient(90deg, oklch(16% 0.06 145 / 0.96) 0%, oklch(18% 0.055 145 / 0.8) 48%, oklch(18% 0.055 145 / 0.35) 100%), url("/images/services.jpeg"); background-position: center; background-size: cover; }
 .hero::after { content: ""; position: absolute; inset: auto -10% -44% 48%; z-index: -1; height: 70%; border-radius: 50%; background: oklch(78% 0.17 112 / 0.13); filter: blur(1px); }
 .hero-content { display: grid; grid-template-columns: minmax(0, 1fr); align-items: end; gap: 70px; }
@@ -174,9 +175,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media (max-width: 900px) {
   .nav-cta { display: none; }
   .menu-button { display: grid; place-items: center; }
-  .nav-links { position: absolute; top: 78px; left: 0; right: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 12px 24px 18px; margin: 0; border-bottom: 1px solid oklch(100% 0 0 / 0.12); background: var(--forest-deep); }
+  .nav-links { position: absolute; top: 92px; left: 24px; right: 24px; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 18px 12px; margin: 0; border-radius: 22px; background: var(--forest-deep); box-shadow: var(--shadow-md); }
   .nav-links.active { display: flex; }
-  .nav-links button { text-align: left; border-bottom: 1px solid oklch(100% 0 0 / 0.1); }
+  .nav-links button { text-align: left; padding: 14px 6px; border-radius: 0; border-bottom: 1px solid oklch(100% 0 0 / 0.1); }
+  .nav-links button.is-active { background: transparent; color: var(--lime); }
+  .nav-links button:last-child { border-bottom: 0; }
   .hero-content { gap: 42px; }
   .about-grid, .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 52px; }
   .cta-content { align-items: flex-start; flex-direction: column; }
@@ -189,9 +192,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 @media (max-width: 640px) {
   .container { width: min(100% - 32px, 1180px); }
-  .nav-container { min-height: 70px; }
-  .logo-image { height: 48px; max-width: 150px; }
-  .nav-links { top: 70px; padding-inline: 16px; }
+  .nav-container { min-height: 62px; padding: 6px 8px 6px 18px; }
+  .logo-image { height: 38px; max-width: 130px; }
+  .nav-links { top: 82px; left: 16px; right: 16px; padding-inline: 14px; }
   .section { padding: 78px 0; }
   .hero { min-height: 700px; padding-top: 108px; }
   .hero h1 { font-size: clamp(2.9rem, 14vw, 4.35rem); }

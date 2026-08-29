@@ -228,8 +228,11 @@ function ServiceCarousel({ items, onAction }) {
   );
 }
 
+const sectionIds = ["home", "about", "services", "why-us", "contact"];
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   const navigation = [
     ["home", "Home"],
@@ -239,7 +242,26 @@ function App() {
     ["contact", "Contact"],
   ];
 
+  // Highlights the nav pill for whichever section is currently in view.
+  useEffect(() => {
+    const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+    if (!sections.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToSection = (sectionId) => {
+    setActiveSection(sectionId);
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" });
     setMenuOpen(false);
   };
@@ -271,7 +293,14 @@ function App() {
 
           <nav className={menuOpen ? "nav-links active" : "nav-links"} aria-label="Main navigation">
             {navigation.map(([id, label]) => (
-              <button key={id} onClick={() => scrollToSection(id)}>{label}</button>
+              <button
+                key={id}
+                className={activeSection === id ? "is-active" : undefined}
+                aria-current={activeSection === id ? "page" : undefined}
+                onClick={() => scrollToSection(id)}
+              >
+                {label}
+              </button>
             ))}
           </nav>
 
