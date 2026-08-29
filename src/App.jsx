@@ -613,14 +613,13 @@ function App() {
                 </div>
                 <div className="bento-thumb-grid">
                   {[
-                    ["/images/whychooseus/solar-battery.jpg", "Solar Systems", Battery],
-                    ["/images/whychooseus/water-pump.png", "Water Pumping", Droplets],
-                    ["/images/whychooseus/borehole-drilling.jpg", "Borehole Drilling", Wrench],
-                    ["/images/whychooseus/agro-innovation.jpg", "Agro Innovation", Leaf],
-                  ].map(([src, label, Icon]) => (
+                    ["/images/whychooseus/solar-battery.jpg", "Solar Systems"],
+                    ["/images/whychooseus/water-pump.png", "Water Pumping"],
+                    ["/images/whychooseus/borehole-drilling.jpg", "Borehole Drilling"],
+                    ["/images/whychooseus/agro-innovation.jpg", "Agro Innovation"],
+                  ].map(([src, label]) => (
                     <div className="bento-thumb" key={label}>
                       <SafeImage sources={[src]} alt={label} className="bento-thumb-image" />
-                      <span className="bento-thumb-label"><Icon size={13} />{label}</span>
                     </div>
                   ))}
                 </div>
