@@ -346,9 +346,9 @@ function App() {
           </div>
 
           <div className="hero-photo-cluster" aria-hidden="true">
-            <div className="hero-photo-circle hero-photo-circle-lg">
+            <div className="hero-photo-circle hero-photo-circle-lg hero-photo-circle-product">
               <SafeImage
-                sources={["/images/showcase/solar-shade-hero.jpg"]}
+                sources={["/images/heropump.png"]}
                 alt=""
                 className="hero-photo-img"
               />
