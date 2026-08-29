@@ -160,8 +160,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
    together along one line, and it opens again with the next photo.
    Hovering (.is-paused) freezes the whole sequence in place. --- */
 .stream { position: absolute; inset: 0; overflow: hidden; }
-.stream.is-paused .stream-tile-img,
-.stream.is-paused .stream-badge { animation-play-state: paused; }
+.stream.is-paused .stream-tile-img { animation-play-state: paused; }
 
 .stream-tile {
   position: absolute;
@@ -188,11 +187,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   55% { filter: blur(3px) saturate(1.08) brightness(1.05); opacity: 1; }
   100% { filter: blur(0) saturate(1) brightness(1); opacity: 1; }
 }
-
-.stream-badge { position: absolute; left: 16px; bottom: 16px; z-index: 40; display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px 8px 8px; border-radius: 999px; background: oklch(22% 0.03 145 / 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid oklch(100% 0 0 / 0.14); color: oklch(98% 0.01 145); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.01em; box-shadow: 0 12px 26px oklch(8% 0.03 145 / 0.35); opacity: 0; animation: streamBadgeIn 650ms var(--ease-out) 250ms both; }
-.stream-badge-icon { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--lime); color: var(--forest-deep); flex: 0 0 auto; }
-.stream-badge-icon svg { width: 13px; height: 13px; }
-@keyframes streamBadgeIn { from { opacity: 0; transform: translateY(10px) scale(0.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 @keyframes showcaseFadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes showcaseInfoIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
@@ -312,7 +306,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .showcase-stage { aspect-ratio: 4 / 3.3; min-height: 380px; }
   .showcase-info { padding: 24px 28px 44px; }
   .showcase-info p { max-width: 52ch; }
-  .stream-badge { font-size: 0.72rem; padding: 7px 12px 7px 7px; }
   .bento-header { flex-direction: column; align-items: flex-start; gap: 20px; }
   .bento-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: auto; }
   .bento-card--light { grid-column: 1 / 3; grid-row: 1; }
@@ -342,9 +335,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .showcase-info h3 { font-size: 1.35rem; }
   .showcase-info p { max-width: 40ch; font-size: 0.88rem; }
   .showcase-info button { padding: 11px 18px; }
-  .stream-badge { left: 12px; bottom: 12px; font-size: 0.66rem; padding: 6px 11px 6px 6px; gap: 5px; }
-  .stream-badge-icon { width: 18px; height: 18px; }
-  .stream-badge-icon svg { width: 11px; height: 11px; }
   .form-row { grid-template-columns: 1fr; }
   .contact-form { padding: 20px; }
   .footer-content { align-items: flex-start; flex-direction: column; }

@@ -1,4 +1,4 @@
-import { cloneElement, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
   Battery,
@@ -29,7 +29,6 @@ const services = [
     icon: <Sun size={26} />,
     title: "Solar Installation",
     description: "Professional solar system design and installation for homes, businesses, institutions, and farms.",
-    badge: "Certified Installers",
     images: [
       ["/images/solar-installation.jpeg", "/images/solar-installation.jpg"],
       ["/images/Professional-installation-services.jpeg"],
@@ -39,7 +38,6 @@ const services = [
     icon: <Battery size={26} />,
     title: "Solar Backup Systems",
     description: "Reliable battery and backup solutions designed to keep your home or business powered when you need it most.",
-    badge: "24/7 Power Backup",
     images: [
       ["/images/solar-products.jpeg", "/images/solar-products.jpg"],
       ["/images/project-result.jpeg"],
@@ -49,7 +47,6 @@ const services = [
     icon: <Droplets size={26} />,
     title: "Solar Water Pumping",
     description: "Efficient solar-powered water pumping systems for farms, livestock, homes, and agricultural projects.",
-    badge: "Built for Farms",
     images: [
       ["/images/water-pumps.jpeg", "/images/water-pumps.jpg"],
       ["/images/showcase/water-pump-river.jpg"],
@@ -60,7 +57,6 @@ const services = [
     icon: <Wrench size={26} />,
     title: "Borehole Drilling",
     description: "Professional borehole drilling solutions that help homes, businesses, and farms access reliable water.",
-    badge: "Licensed Drilling Crew",
     images: [
       ["/images/solar-pumping-project.jpeg", "/images/solar-pumping-project.jpg"],
       ["/images/showcase/borehole-rig-truck.jpg"],
@@ -71,7 +67,6 @@ const services = [
     icon: <Zap size={26} />,
     title: "Solar Maintenance",
     description: "Inspection, troubleshooting, maintenance, and repair services to keep your solar system performing efficiently.",
-    badge: "Field-Tested Care",
     images: [
       ["/images/elitex-engineers.jpg", "/images/elitex-engineers.jpeg"],
       ["/images/sollar.education.jpeg"],
@@ -82,7 +77,6 @@ const services = [
     icon: <Leaf size={26} />,
     title: "Agro Innovation",
     description: "Practical agricultural and energy innovations designed to support productivity and sustainable farming.",
-    badge: "Smart, Sustainable Farming",
     images: [
       ["/images/services.jpeg", "/images/services.jpg"],
       ["/images/showcase/agro-drip-irrigation.jpg"],
@@ -93,7 +87,6 @@ const services = [
     icon: <Umbrella size={26} />,
     title: "Solar Shade Structures",
     description: "Elevated solar shade and carport structures that generate clean power while shading homes, yards, and farm equipment.",
-    badge: "Power Meets Shade",
     images: [
       ["/images/showcase/solar-shade-hero.jpg"],
       ["/images/showcase/solar-shade-angled.jpg"],
@@ -267,7 +260,7 @@ function streamTileGeometry(i, ctx) {
   return { style: HIDDEN_TILE, hero: false };
 }
 
-function ImageStream({ images, alt, active, paused, badge, badgeIcon }) {
+function ImageStream({ images, alt, active, paused }) {
   const count = images.length;
   const { cues, total } = useMemo(() => buildStreamTimeline(count), [count]);
   const [elapsed, setElapsed] = useState(0);
@@ -321,13 +314,6 @@ function ImageStream({ images, alt, active, paused, badge, badgeIcon }) {
           </div>
         );
       })}
-
-      {badge && (
-        <div key={active ? "in" : "out"} className="stream-badge">
-          <span className="stream-badge-icon">{badgeIcon}</span>
-          {badge}
-        </div>
-      )}
     </div>
   );
 }
@@ -396,8 +382,6 @@ function ServiceCarousel({ items, onAction }) {
                 alt={item.title}
                 active={i === index}
                 paused={paused}
-                badge={item.badge}
-                badgeIcon={cloneElement(item.icon, { size: 13 })}
               />
             </div>
           ))}
