@@ -630,9 +630,14 @@ function App() {
                 <p>From first site assessment to final commissioning and after-sales care — the same technicians see your project through, not a rotating crew.</p>
                 <div className="bento-flow">
                   <SafeImage sources={["/images/elitex-engineers.jpg", "/images/elitex-engineers.jpeg"]} alt="Elitex engineering team" className="bento-flow-image" />
-                  <span className="bento-flow-chip bento-flow-chip--one">Assess</span>
-                  <span className="bento-flow-chip bento-flow-chip--two">Install</span>
-                  <span className="bento-flow-chip bento-flow-chip--three">Support</span>
+                  <div className="bento-flow-steps">
+                    {["Assess", "Install", "Support"].map((step, i) => (
+                      <span className="bento-flow-step" key={step}>
+                        <span className="bento-flow-step-num">{i + 1}</span>
+                        {step}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
