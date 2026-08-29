@@ -493,6 +493,9 @@ function App() {
                 {label}
               </button>
             ))}
+            <button className="nav-links-cta" onClick={() => scrollToSection("contact")}>
+              Get a Quote <ArrowRight size={17} />
+            </button>
           </nav>
 
           <button className="nav-cta" onClick={() => scrollToSection("contact")}>
@@ -505,7 +508,7 @@ function App() {
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
           >
-            {menuOpen ? <X /> : <Menu />}
+            {menuOpen ? <X size={26} strokeWidth={2.75} /> : <Menu size={26} strokeWidth={2.75} />}
           </button>
         </div>
       </header>
