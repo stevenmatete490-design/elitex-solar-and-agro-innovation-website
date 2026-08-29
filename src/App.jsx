@@ -644,25 +644,19 @@ function App() {
               <div className="bento-card bento-card--clay">
                 <h3>Every project, tailored</h3>
                 <p>Every project is assessed individually — homes, farms, and institutions each get a system sized and engineered for them.</p>
-                <div className="bento-project-chips">
-                  <div className="bento-project-chip">
-                    <SafeImage sources={["/images/project-result.jpeg"]} alt="Residential project" className="bento-project-image" />
-                    <span>Residential</span>
-                  </div>
-                  <div className="bento-project-chip">
-                    <SafeImage sources={["/images/showcase/agro-watering-cabbage.jpg"]} alt="Farm project" className="bento-project-image" />
-                    <span>Farm Project</span>
-                  </div>
+                <div className="bento-project-tags">
+                  <span className="bento-project-tag">Residential</span>
+                  <span className="bento-project-tag">Farm Project</span>
+                  <span className="bento-project-tag">Institutional</span>
                 </div>
               </div>
 
               <div className="bento-card bento-card--sky">
                 <h3>Support that doesn't stop at install</h3>
                 <p>Maintenance, troubleshooting, and repairs — one call away whenever you need us.</p>
-                <div className="bento-support">
-                  <SafeImage sources={["/images/showcase/maintenance-technician-check.jpg"]} alt="Elitex maintenance technician" className="bento-support-image" />
-                  <button className="bento-bubble" onClick={() => scrollToSection("contact")}>Talk to Us</button>
-                </div>
+                <button className="bento-inline-btn" onClick={() => scrollToSection("contact")}>
+                  Talk to Us <ArrowRight size={16} />
+                </button>
               </div>
             </div>
           </div>
