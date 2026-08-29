@@ -145,7 +145,7 @@ const REEL_STEP = 2600;
 const GRID_HOLD = 4200;
 const EXIT_MS = 750;
 const GAP_MS = 400;
-const TILE_GAP = 3;
+const TILE_GAP = 4;
 const HIDDEN_TILE = { left: "50%", top: "50%", width: "6%", height: "6%", opacity: 0, zIndex: 0 };
 
 function buildStreamTimeline(count) {

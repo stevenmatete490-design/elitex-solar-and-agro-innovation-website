@@ -107,12 +107,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-tab.is-active { background: var(--forest-deep); color: oklch(98% 0.01 145); }
 .showcase-tab.is-active .showcase-tab-icon { opacity: 1; color: var(--lime); }
 
-/* The card is one full-bleed photo stage now: the image (in whatever
-   arrangement — solo, split, reel) fills the entire card, and the title,
-   description and CTA sit as a single top overlay on a consistent scrim,
-   rather than living in a separate side column with its own background. */
-.showcase-stage { position: relative; aspect-ratio: 16 / 8.2; min-height: 420px; border-radius: 32px; background: var(--forest-deep); overflow: hidden; box-shadow: var(--shadow-md); }
-.showcase-stage::before { content: ""; position: absolute; inset: auto -10% -30% 55%; z-index: 0; height: 65%; border-radius: 50%; background: oklch(78% 0.17 112 / 0.1); filter: blur(40px); pointer-events: none; }
+/* The card has no background of its own — it's transparent, so the section's
+   own warm page color shows straight through wherever a photo doesn't cover
+   it (the gutters between split/reel panels, the brief pause between loops),
+   making the photos read as objects resting on the page itself rather than
+   tiles inside a dark box. The title, description and CTA sit as a single
+   top overlay on their own scrim directly against each photo, which stays
+   legible no matter what's behind the card. */
+.showcase-stage { position: relative; aspect-ratio: 16 / 8.2; min-height: 420px; border-radius: 32px; background: transparent; overflow: hidden; }
 
 .showcase-info { position: absolute; inset: 0 0 auto 0; z-index: 50; padding: 30px 40px 64px; color: oklch(98% 0.01 145); background: linear-gradient(180deg, oklch(8% 0.03 145 / 0.88) 0%, oklch(8% 0.03 145 / 0.58) 58%, transparent 100%); pointer-events: none; animation: showcaseInfoIn 550ms var(--ease-out); }
 .showcase-info-index { display: block; margin-bottom: 10px; color: var(--lime); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em; }
@@ -121,8 +123,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-info button { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border: 0; border-radius: 999px; background: var(--lime); color: var(--forest-deep); font-weight: 700; box-shadow: var(--shadow-sm); transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out); pointer-events: auto; }
 .showcase-info button:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-.showcase-visual { position: absolute; inset: 0; z-index: 1; overflow: hidden; background: var(--forest-deep); transition: transform 150ms ease-out; transform-style: preserve-3d; will-change: transform; }
-.showcase-visual-glow { position: absolute; inset: -14%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, oklch(78% 0.17 112 / 0.28), transparent 72%); filter: blur(30px); pointer-events: none; }
+.showcase-visual { position: absolute; inset: 0; z-index: 1; overflow: hidden; background: transparent; transition: transform 150ms ease-out; transform-style: preserve-3d; will-change: transform; }
+.showcase-visual-glow { position: absolute; inset: -14%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, oklch(78% 0.17 112 / 0.16), transparent 72%); filter: blur(30px); pointer-events: none; }
 .showcase-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 750ms var(--ease-out); }
 .showcase-frame.is-active { opacity: 1; z-index: 1; }
 
@@ -143,7 +145,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   position: absolute;
   overflow: hidden;
   border-radius: 14px;
-  box-shadow: 0 16px 36px oklch(8% 0.03 145 / 0.4);
+  box-shadow: 0 18px 40px oklch(30% 0.03 75 / 0.22), 0 4px 10px oklch(30% 0.03 75 / 0.12);
   transition:
     left 850ms cubic-bezier(0.65, 0, 0.35, 1),
     top 850ms cubic-bezier(0.65, 0, 0.35, 1),
