@@ -171,9 +171,18 @@ function buildStreamTimeline(count) {
     cues.push({ t, type: "grid" });
     t += GRID_HOLD;
   }
-  cues.push({ t, type: "exit" });
+  const exitFrom = count >= 4 ? "grid" : count >= 3 ? "reel" : "duo";
+  cues.push({ t, type: "exit", from: exitFrom });
   t += EXIT_MS;
-  cues.push({ t, type: "gap" });
+  // The gap is just a held beat before the loop restarts, not a fresh
+  // layout: it keeps every tile parked exactly where "exit" left it
+  // (off-stage, mid-slide) so nothing new starts transitioning here. If
+  // it instead re-targeted tiles toward a tiny centered placeholder, that
+  // transition would immediately get interrupted by the next solo cue
+  // pulling the same tile back on-stage, and the two overlapping,
+  // half-finished transitions is what read as a stray dark/hazy patch
+  // drifting across the card.
+  cues.push({ t, type: "exit", from: exitFrom });
   t += GAP_MS;
   return { cues, total: t };
 }
@@ -186,16 +195,28 @@ function reelTileStyle(i, activeIndex, revealed) {
 }
 
 function streamTileGeometry(i, ctx) {
-  const { type, revealed, activeReel, count, entering, from } = ctx;
+  const { type, revealed, activeReel, entering, from } = ctx;
 
   if (type === "gap") return { style: HIDDEN_TILE, hero: false };
 
   if (type === "exit") {
-    const w = 100 / count;
-    return {
-      style: { left: `${i * w}%`, top: "0%", width: `${w - 1.2}%`, height: "100%", opacity: 1, zIndex: i + 1, transform: "translateX(-125%)" },
-      hero: false,
-    };
+    // Slide the settled arrangement off as one piece: reuse each tile's
+    // already-settled position/size (duo, reel, or grid, whichever the
+    // sequence was last showing) rather than snapping to a fresh layout,
+    // so only the slide itself animates instead of position and size
+    // jumping at the same time the tile starts moving.
+    const base =
+      from === "reel"
+        ? reelTileStyle(i, activeReel, Math.min(revealed, 3))
+        : from === "grid"
+        ? (() => {
+            const col = i % 2;
+            const row = Math.floor(i / 2);
+            const w = 50 - TILE_GAP;
+            return { left: `${col === 0 ? 0 : 50 + TILE_GAP}%`, top: `${row === 0 ? 0 : 50 + TILE_GAP}%`, width: `${w}%`, height: `${w}%`, opacity: 1, zIndex: 2 };
+          })()
+        : { left: `${i === 0 ? 0 : 50 + TILE_GAP}%`, top: "0%", width: `${50 - TILE_GAP}%`, height: "100%", opacity: 1, zIndex: 2 };
+    return { style: { ...base, transform: "translateX(-125%)" }, hero: false };
   }
 
   if (i >= revealed) return { style: HIDDEN_TILE, hero: false };
