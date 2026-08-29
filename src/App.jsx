@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Battery,
@@ -20,77 +20,44 @@ import "./index.css";
 
 const whatsappNumber = "254759341122";
 
+// Each service is paired with a photo from real Elitex work, so the
+// services carousel doubles as the "our work" showcase.
 const services = [
   {
-    icon: <Sun size={28} />,
+    icon: <Sun size={26} />,
     title: "Solar Installation",
     description: "Professional solar system design and installation for homes, businesses, institutions, and farms.",
+    sources: ["/images/solar-installation.jpeg", "/images/solar-installation.jpg"],
   },
   {
-    icon: <Battery size={28} />,
+    icon: <Battery size={26} />,
     title: "Solar Backup Systems",
     description: "Reliable battery and backup solutions designed to keep your home or business powered when you need it most.",
+    sources: ["/images/solar-products.jpeg", "/images/solar-products.jpg"],
   },
   {
-    icon: <Droplets size={28} />,
+    icon: <Droplets size={26} />,
     title: "Solar Water Pumping",
     description: "Efficient solar-powered water pumping systems for farms, livestock, homes, and agricultural projects.",
+    sources: ["/images/water-pumps.jpeg", "/images/water-pumps.jpg"],
   },
   {
-    icon: <Wrench size={28} />,
+    icon: <Wrench size={26} />,
     title: "Borehole Drilling",
     description: "Professional borehole drilling solutions that help homes, businesses, and farms access reliable water.",
+    sources: ["/images/solar-pumping-project.jpeg", "/images/solar-pumping-project.jpg"],
   },
   {
-    icon: <Zap size={28} />,
+    icon: <Zap size={26} />,
     title: "Solar Maintenance",
     description: "Inspection, troubleshooting, maintenance, and repair services to keep your solar system performing efficiently.",
+    sources: ["/images/elitex-engineers.jpg", "/images/elitex-engineers.jpeg"],
   },
   {
-    icon: <Leaf size={28} />,
+    icon: <Leaf size={26} />,
     title: "Agro Innovation",
     description: "Practical agricultural and energy innovations designed to support productivity and sustainable farming.",
-  },
-];
-
-// These names match the files shown in your public/images folder.
-// Each gallery item uses a different primary image, so no card repeats another card's image.
-const galleryItems = [
-  {
-    sources: ["/images/solar-installation.jpeg", "/images/solar-installation.jpg"],
-    category: "Solar Installation",
-    title: "Professional Installation Services",
-    description: "From planning to final installation, our team delivers dependable solar solutions while valuing customer feedback throughout the journey.",
-  },
-  {
-    sources: ["/images/solar-products.jpeg", "/images/solar-products.jpg"],
-    category: "Solar Products",
-    title: "Solutions for Every Energy Need",
-    description: "From portable solar lanterns and lighting to complete home, business, and backup systems, we help you choose the right solution.",
-  },
-  {
-    sources: ["/images/water-pumps.jpeg", "/images/water-pumps.jpg"],
-    category: "Solar Water Pumps",
-    title: "Efficient Water Pumping Solutions",
-    description: "Our solar surface pumps move water from rivers, dams, swamps, and other sources with reliable pressure while reducing long-term operating costs.",
-  },
-  {
-    sources: ["/images/elitex-engineers.jpg", "/images/elitex-engineers.jpeg"],
-    category: "Our Engineers",
-    title: "A Skilled and Dedicated Team",
-    description: "Our capable team combines practical experience and engineering expertise to deliver quality installations, system support, and dependable after-sales service.",
-  },
-  {
-    sources: ["/images/project-result.jpeg", "/images/project-result.jpg"],
-    category: "Results That Matter",
-    title: "The Result of Dedicated Work",
-    description: "Every completed project reflects our commitment to practical planning, quality workmanship, reliable performance, and sustainable customer solutions.",
-  },
-  {
-    sources: ["/images/solar-pumping-project.jpeg", "/images/solar-pumping-project.jpg"],
-    category: "Solar Pumping Project",
-    title: "Powering Productive Agriculture",
-    description: "Reliable solar pumping helps farms move water efficiently and build more productive, sustainable operations.",
+    sources: ["/images/services.jpeg", "/images/services.jpg"],
   },
 ];
 
@@ -121,6 +88,76 @@ function SafeImage({ sources, alt, className = "" }) {
   );
 }
 
+function ServiceCarousel({ items, onAction }) {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const total = items.length;
+  const autoplayMs = 5000;
+
+  useEffect(() => {
+    if (paused) return undefined;
+    const timer = setInterval(() => {
+      setIndex((current) => (current + 1) % total);
+    }, autoplayMs);
+    return () => clearInterval(timer);
+  }, [paused, total]);
+
+  const active = items[index];
+
+  return (
+    <div
+      className={paused ? "showcase-shell is-paused" : "showcase-shell"}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="showcase-tabs" role="tablist" aria-label="Our services">
+        {items.map((item, i) => {
+          const isActive = i === index;
+          return (
+            <button
+              key={item.title}
+              role="tab"
+              aria-selected={isActive}
+              className={isActive ? "showcase-tab is-active" : "showcase-tab"}
+              onClick={() => setIndex(i)}
+              onFocus={() => setPaused(true)}
+              onBlur={() => setPaused(false)}
+            >
+              <span className="showcase-tab-head">
+                <span className="showcase-tab-icon">{item.icon}</span>
+                <strong>{item.title}</strong>
+              </span>
+              {isActive && <span className="showcase-tab-desc">{item.description}</span>}
+              <span className="showcase-tab-track">
+                {isActive && <span key={index} className="showcase-tab-fill" />}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="showcase-stage">
+        {items.map((item, i) => (
+          <div
+            key={item.title}
+            className={i === index ? "showcase-frame is-active" : "showcase-frame"}
+            aria-hidden={i !== index}
+          >
+            <SafeImage sources={item.sources} alt={item.title} className="showcase-image" />
+          </div>
+        ))}
+
+        <div key={index} className="showcase-overlay">
+          <span className="showcase-overlay-index">{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+          <strong>{active.title}</strong>
+          <p>{active.description}</p>
+          <button onClick={onAction}>Talk to Us <ArrowRight size={16} /></button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -128,7 +165,6 @@ function App() {
     ["home", "Home"],
     ["about", "About"],
     ["services", "Services"],
-    ["gallery", "Our Work"],
     ["why-us", "Why Elitex"],
     ["contact", "Contact"],
   ];
@@ -236,47 +272,9 @@ function App() {
             <div className="section-heading">
               <span className="section-tag">Our Services</span>
               <h2>Offering affordable services with accredited technicians.</h2>
-              <p>From the first assessment to installation and after-sales support, our accredited technicians deliver quality work at prices that make sense for your budget.</p>
+              <p>From the first assessment to installation and after-sales support, our accredited technicians deliver quality work at prices that make sense for your budget. Explore each service alongside real projects from the field.</p>
             </div>
-            <div className="services-grid">
-              {services.map((service, index) => (
-                <article className="service-card" key={service.title}>
-                  <div className="service-number">{String(index + 1).padStart(2, "0")}</div>
-                  <div className="service-icon">{service.icon}</div>
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
-                  <button onClick={() => scrollToSection("contact")}>Learn More <ArrowRight size={17} /></button>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="gallery" className="section gallery-section">
-          <div className="container">
-            <div className="section-heading gallery-heading">
-              <span className="section-tag">Elitex in Action</span>
-              <h2>Our work, products <em>and practical solutions.</em></h2>
-              <p>Explore the installations, products, water solutions, engineering work, and projects behind the Elitex promise.</p>
-            </div>
-            <div className="gallery-shell">
-              <div className="gallery-grid">
-                {galleryItems.map((item, index) => (
-                  <article className="gallery-card" key={item.title}>
-                    <div className="gallery-image">
-                      <SafeImage sources={item.sources} alt={item.title} />
-                      <span className="gallery-index">{String(index + 1).padStart(2, "0")}</span>
-                    </div>
-                    <div className="gallery-content">
-                      <span className="gallery-category">{item.category}</span>
-                      <h3>{item.title}</h3>
-                      <p>{item.description}</p>
-                      <button onClick={() => scrollToSection("contact")}>Talk to Us <ArrowRight size={17} /></button>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
+            <ServiceCarousel items={services} onAction={() => scrollToSection("contact")} />
           </div>
         </section>
 
