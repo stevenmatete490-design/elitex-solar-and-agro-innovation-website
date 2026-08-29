@@ -123,51 +123,49 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 750ms var(--ease-out); }
 .showcase-frame.is-active { opacity: 1; z-index: 1; }
 
-/* --- Image stream: a single service's photos, presented like a directed
-   shot rather than a plain slideshow. A story-style progress rail marks
-   time and position, each incoming photo resolves out of a soft glow,
-   a trust badge floats over the frame, and a next-up chip teases the
-   coming shot. Everything freezes on .is-paused so a hovered card can be
-   studied without the reel continuing to move underneath it. --- */
+/* --- Image stream: a single service's photos, choreographed like a short
+   edit rather than a slideshow. One photo opens big and alone; the next
+   photo's big entrance sends the first one down into a small corner frame,
+   then both settle into an even two-up split; a third photo's big entrance
+   resolves the split into a horizontal reel (one enlarged, the next
+   peeking at the edge); a fourth would resolve into a four-up grid. When
+   the sequence is done, however many photos are on screen slide off
+   together along one line, and it opens again with the next photo.
+   Hovering (.is-paused) freezes the whole sequence in place. --- */
 .stream { position: absolute; inset: 0; overflow: hidden; }
-.stream.is-paused .stream-progress-fill,
-.stream.is-paused .stream-sheen,
-.stream.is-paused .stream-image.is-active,
-.stream.is-paused .stream-badge,
-.stream.is-paused .stream-next { animation-play-state: paused; }
+.stream.is-paused .stream-tile-img,
+.stream.is-paused .stream-badge { animation-play-state: paused; }
 
-.stream-track { display: flex; height: 100%; transition: transform 900ms cubic-bezier(0.65, 0, 0.35, 1); }
-.stream-slide { position: relative; flex: 0 0 100%; height: 100%; overflow: hidden; }
-.stream-image { width: 100%; height: 100%; object-fit: cover; transform: scale(1); filter: blur(0) saturate(1) brightness(1); transition: transform 5000ms linear; }
-.stream-image.is-active { transform: scale(1.07); animation: streamMaterialize 900ms var(--ease-out) both; }
+.stream-tile {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 16px 36px oklch(8% 0.03 145 / 0.4);
+  transition:
+    left 850ms cubic-bezier(0.65, 0, 0.35, 1),
+    top 850ms cubic-bezier(0.65, 0, 0.35, 1),
+    width 850ms cubic-bezier(0.65, 0, 0.35, 1),
+    height 850ms cubic-bezier(0.65, 0, 0.35, 1),
+    transform 850ms cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 500ms ease,
+    box-shadow 400ms ease;
+}
+.stream-tile.is-hero { border-radius: 0; box-shadow: none; }
 
-@keyframes streamMaterialize {
-  0% { filter: blur(20px) saturate(1.35) brightness(1.25); opacity: 0.45; }
+.stream-tile-img { width: 100%; height: 100%; object-fit: cover; display: block; animation: streamBreathe 9000ms ease-in-out infinite alternate; animation-delay: calc(var(--tile-i, 0) * -1.6s); }
+.stream-tile.is-hero .stream-tile-img { animation: streamHeroIn 900ms var(--ease-out) both, streamBreathe 9000ms ease-in-out infinite alternate; }
+
+@keyframes streamBreathe { from { transform: scale(1); } to { transform: scale(1.06); } }
+@keyframes streamHeroIn {
+  0% { filter: blur(20px) saturate(1.35) brightness(1.25); opacity: 0.4; }
   55% { filter: blur(3px) saturate(1.08) brightness(1.05); opacity: 1; }
   100% { filter: blur(0) saturate(1) brightness(1); opacity: 1; }
 }
 
-.stream-sheen { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(115deg, transparent 42%, oklch(100% 0 0 / 0.24) 50%, transparent 58%); transform: translateX(-120%); animation: streamSheen 1100ms var(--ease-out) both; }
-@keyframes streamSheen { to { transform: translateX(120%); } }
-
-.stream-progress { position: absolute; top: 16px; left: 16px; right: 16px; z-index: 5; display: flex; gap: 6px; }
-.stream-progress-seg { flex: 1; height: 3px; border-radius: 2px; background: oklch(100% 0 0 / 0.28); overflow: hidden; }
-.stream-progress-fill { display: block; width: 100%; height: 100%; background: var(--lime); transform: scaleX(0); transform-origin: left; }
-.stream-progress-seg.is-done .stream-progress-fill { transform: scaleX(1); }
-.stream-progress-seg.is-active .stream-progress-fill { animation: streamFill 4200ms linear forwards; }
-@keyframes streamFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-
-.stream-badge { position: absolute; left: 16px; bottom: 16px; z-index: 4; display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px 8px 8px; border-radius: 999px; background: oklch(22% 0.03 145 / 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid oklch(100% 0 0 / 0.14); color: oklch(98% 0.01 145); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.01em; box-shadow: 0 12px 26px oklch(8% 0.03 145 / 0.35); opacity: 0; animation: streamBadgeIn 650ms var(--ease-out) 250ms both; }
+.stream-badge { position: absolute; left: 16px; bottom: 16px; z-index: 40; display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px 8px 8px; border-radius: 999px; background: oklch(22% 0.03 145 / 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid oklch(100% 0 0 / 0.14); color: oklch(98% 0.01 145); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.01em; box-shadow: 0 12px 26px oklch(8% 0.03 145 / 0.35); opacity: 0; animation: streamBadgeIn 650ms var(--ease-out) 250ms both; }
 .stream-badge-icon { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--lime); color: var(--forest-deep); flex: 0 0 auto; }
 .stream-badge-icon svg { width: 13px; height: 13px; }
 @keyframes streamBadgeIn { from { opacity: 0; transform: translateY(10px) scale(0.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
-
-.stream-next { position: absolute; right: 14px; bottom: 14px; z-index: 4; width: 30%; max-width: 108px; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; border: 3px solid var(--paper); box-shadow: var(--shadow-md); background: var(--forest-deep); animation: streamNextIn 700ms var(--ease-out) both; transition: transform 220ms var(--ease-out); }
-.stream-next:hover { transform: scale(1.07); }
-.stream-next-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.88; }
-.stream-next-label { position: absolute; left: 0; right: 0; bottom: 0; padding: 3px 0; text-align: center; font-size: 0.56rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; color: oklch(98% 0.01 145); background: linear-gradient(to top, oklch(8% 0.02 145 / 0.85), transparent); }
-
-@keyframes streamNextIn { from { opacity: 0; transform: translate(22px, 14px) scale(0.9); } to { opacity: 1; transform: translate(0, 0) scale(1); } }
 
 @keyframes showcaseFadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes showcaseInfoIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
@@ -263,12 +261,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .showcase-visual { aspect-ratio: 4 / 3; }
   .showcase-info h3 { font-size: 1.35rem; }
   .showcase-info button { padding: 11px 18px; }
-  .stream-progress { top: 12px; left: 12px; right: 12px; }
   .stream-badge { left: 12px; bottom: 12px; font-size: 0.66rem; padding: 6px 11px 6px 6px; gap: 5px; }
   .stream-badge-icon { width: 18px; height: 18px; }
   .stream-badge-icon svg { width: 11px; height: 11px; }
-  .stream-next { right: 10px; bottom: 10px; max-width: 84px; border-width: 2px; }
-  .stream-next-label { font-size: 0.5rem; }
   .form-row { grid-template-columns: 1fr; }
   .contact-form { padding: 20px; }
   .footer-content { align-items: flex-start; flex-direction: column; }

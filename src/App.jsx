@@ -1,4 +1,4 @@
-import { cloneElement, useEffect, useState } from "react";
+import { cloneElement, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight,
   Battery,
@@ -129,70 +129,191 @@ function SafeImage({ sources, alt, className = "" }) {
   );
 }
 
-// Cycles through a service's 2-3 photos like a short, hand-directed shot:
-// each new photo slides in from the right while the previous one swipes
-// fully out to the left (both visible mid-swap), the incoming shot
-// materializes out of a soft blur/glow rather than snapping into focus,
-// a story-style progress rail up top shows exactly where you are in the
-// sequence and keeps filling while it's live, a small trust badge floats
-// in on the image, and a "next" chip in the corner teases the coming shot.
-// Hovering the card (paused) freezes everything in place so a single
-// frame can be studied without the reel moving on underneath it.
-function ImageStream({ images, alt, active, paused, badge, badgeIcon }) {
-  const [frame, setFrame] = useState(0);
+// A single service's photos, choreographed like a short edit rather than a
+// slideshow: photo one opens big and alone; photo two's big entrance sends
+// photo one down into a small corner frame, then both settle into an even
+// two-up split; photo three's big entrance resolves that split into a
+// horizontal reel (one photo enlarged, the next peeking at the edge, cycling
+// through all of them); a photo four would resolve the reel into a four-up
+// grid. When the sequence has played out, however many photos are on screen
+// slide off together along one line, and it opens again from photo one.
+const HERO_HOLD = 2600;
+const HANDOFF_MS = 900;
+const DUO_HOLD = 3400;
+const COVER_MS = 900;
+const REEL_STEP = 2600;
+const GRID_HOLD = 4200;
+const EXIT_MS = 750;
+const GAP_MS = 400;
+const TILE_GAP = 3;
+const HIDDEN_TILE = { left: "50%", top: "50%", width: "6%", height: "6%", opacity: 0, zIndex: 0 };
+
+function buildStreamTimeline(count) {
+  const cues = [];
+  let t = 0;
+  cues.push({ t, type: "solo" });
+  t += HERO_HOLD;
+  if (count >= 2) {
+    cues.push({ t, type: "handoff" });
+    t += HANDOFF_MS;
+    cues.push({ t, type: "duo" });
+    t += DUO_HOLD;
+  }
+  if (count >= 3) {
+    cues.push({ t, type: "cover", entering: 2, from: "duo" });
+    t += COVER_MS;
+    cues.push({ t, type: "reel" });
+    t += REEL_STEP * Math.min(count, 3);
+  }
+  if (count >= 4) {
+    cues.push({ t, type: "cover", entering: 3, from: "reel" });
+    t += COVER_MS;
+    cues.push({ t, type: "grid" });
+    t += GRID_HOLD;
+  }
+  cues.push({ t, type: "exit" });
+  t += EXIT_MS;
+  cues.push({ t, type: "gap" });
+  t += GAP_MS;
+  return { cues, total: t };
+}
+
+function reelTileStyle(i, activeIndex, revealed) {
+  const offset = ((i - activeIndex) % revealed + revealed) % revealed;
+  if (offset === 0) return { left: "14%", top: "0%", width: "68%", height: "100%", opacity: 1, zIndex: 6 };
+  if (offset === 1) return { left: "84%", top: "9%", width: "20%", height: "82%", opacity: 0.72, zIndex: 3 };
+  return { left: "-4%", top: "9%", width: "20%", height: "82%", opacity: 0.72, zIndex: 3 };
+}
+
+function streamTileGeometry(i, ctx) {
+  const { type, revealed, activeReel, count, entering, from } = ctx;
+
+  if (type === "gap") return { style: HIDDEN_TILE, hero: false };
+
+  if (type === "exit") {
+    const w = 100 / count;
+    return {
+      style: { left: `${i * w}%`, top: "0%", width: `${w - 1.2}%`, height: "100%", opacity: 1, zIndex: i + 1, transform: "translateX(-125%)" },
+      hero: false,
+    };
+  }
+
+  if (i >= revealed) return { style: HIDDEN_TILE, hero: false };
+
+  if (type === "solo") {
+    return { style: { left: "0%", top: "0%", width: "100%", height: "100%", opacity: 1, zIndex: 2 }, hero: false };
+  }
+
+  if (type === "handoff") {
+    if (i === 0) {
+      return { style: { left: "70%", top: "66%", width: "27%", height: "30%", opacity: 1, zIndex: 15 }, hero: false };
+    }
+    return { style: { left: "0%", top: "0%", width: "100%", height: "100%", opacity: 1, zIndex: 20 }, hero: true };
+  }
+
+  if (type === "duo") {
+    const w = 50 - TILE_GAP;
+    return { style: { left: `${i === 0 ? 0 : 50 + TILE_GAP}%`, top: "0%", width: `${w}%`, height: "100%", opacity: 1, zIndex: 2 }, hero: false };
+  }
+
+  if (type === "reel") {
+    return { style: reelTileStyle(i, activeReel, Math.min(revealed, 3)), hero: false };
+  }
+
+  if (type === "grid") {
+    const col = i % 2;
+    const row = Math.floor(i / 2);
+    const w = 50 - TILE_GAP;
+    return {
+      style: { left: `${col === 0 ? 0 : 50 + TILE_GAP}%`, top: `${row === 0 ? 0 : 50 + TILE_GAP}%`, width: `${w}%`, height: `${w}%`, opacity: 1, zIndex: 2 },
+      hero: false,
+    };
+  }
+
+  if (type === "cover") {
+    if (i === entering) {
+      return { style: { left: "0%", top: "0%", width: "100%", height: "100%", opacity: 1, zIndex: 20 }, hero: true };
+    }
+    if (from === "duo") {
+      const w = 50 - TILE_GAP;
+      return { style: { left: `${i === 0 ? 0 : 50 + TILE_GAP}%`, top: "0%", width: `${w}%`, height: "100%", opacity: 1, zIndex: 2 }, hero: false };
+    }
+    if (from === "reel") {
+      return { style: reelTileStyle(i, 0, Math.min(revealed - 1, 3)), hero: false };
+    }
+  }
+
+  return { style: HIDDEN_TILE, hero: false };
+}
+
+function ImageStream({ images, alt, active, paused, badge, badgeIcon, onLoopComplete }) {
   const count = images.length;
+  const { cues, total } = useMemo(() => buildStreamTimeline(count), [count]);
+  const [elapsed, setElapsed] = useState(0);
+  const onLoopCompleteRef = useRef(onLoopComplete);
 
   useEffect(() => {
-    if (!active || paused || count <= 1) return undefined;
-    const timer = setInterval(() => {
-      setFrame((current) => (current + 1) % count);
-    }, 4200);
-    return () => clearInterval(timer);
-  }, [active, paused, count]);
+    onLoopCompleteRef.current = onLoopComplete;
+  }, [onLoopComplete]);
 
-  const nextFrame = (frame + 1) % count;
+  useEffect(() => {
+    if (!active || paused) return undefined;
+    const STEP = 90;
+    const id = setInterval(() => {
+      setElapsed((value) => {
+        const next = value + STEP;
+        if (next >= total) {
+          onLoopCompleteRef.current?.();
+          return 0;
+        }
+        return next;
+      });
+    }, STEP);
+    return () => clearInterval(id);
+  }, [active, paused, total]);
+
+  // Reset the sequence back to its opening shot whenever this service stops
+  // being the active one, so returning to it later always starts fresh.
+  const [wasActive, setWasActive] = useState(active);
+  if (active !== wasActive) {
+    setWasActive(active);
+    if (!active) setElapsed(0);
+  }
+
+  let current = cues[0];
+  for (const cue of cues) {
+    if (cue.t <= elapsed) current = cue;
+    else break;
+  }
+
+  const reelCue = cues.find((cue) => cue.type === "reel");
+  const activeReel = reelCue ? Math.floor((elapsed - reelCue.t) / REEL_STEP) % Math.min(count, 3) : 0;
+
+  let revealed = 0;
+  if (current.type === "solo") revealed = 1;
+  else if (current.type === "handoff" || current.type === "duo") revealed = 2;
+  else if (current.type === "reel") revealed = Math.min(count, 3);
+  else if (current.type === "grid") revealed = Math.min(count, 4);
+  else if (current.type === "cover") revealed = (current.entering ?? 0) + 1;
+  else if (current.type === "exit") revealed = count;
+
+  const ctx = { ...current, revealed, activeReel, count };
 
   return (
     <div className={paused ? "stream is-paused" : "stream"}>
-      <div className="stream-track" style={{ transform: `translateX(-${frame * 100}%)` }}>
-        {images.map((sources, i) => (
-          <div key={i} className="stream-slide" aria-hidden={i !== frame}>
-            <SafeImage
-              sources={sources}
-              alt={`${alt} photo ${i + 1}`}
-              className={i === frame ? "stream-image is-active" : "stream-image"}
-            />
-            {i === frame && <span key={frame} className="stream-sheen" aria-hidden="true" />}
+      {images.map((sources, i) => {
+        const { style, hero } = streamTileGeometry(i, ctx);
+        return (
+          <div key={i} className={hero ? "stream-tile is-hero" : "stream-tile"} style={{ ...style, "--tile-i": i }}>
+            <SafeImage sources={sources} alt={`${alt} photo ${i + 1}`} className="stream-tile-img" />
           </div>
-        ))}
-      </div>
-
-      {count > 1 && (
-        <div className="stream-progress" aria-hidden="true">
-          {images.map((_, i) => (
-            <span
-              key={i}
-              className={
-                i < frame ? "stream-progress-seg is-done" : i === frame ? "stream-progress-seg is-active" : "stream-progress-seg"
-              }
-            >
-              <span key={i === frame ? frame : "static"} className="stream-progress-fill" />
-            </span>
-          ))}
-        </div>
-      )}
+        );
+      })}
 
       {badge && (
         <div key={active ? "in" : "out"} className="stream-badge">
           <span className="stream-badge-icon">{badgeIcon}</span>
           {badge}
-        </div>
-      )}
-
-      {count > 1 && (
-        <div key={frame} className="stream-next" aria-hidden="true">
-          <SafeImage sources={images[nextFrame]} alt="" className="stream-next-img" />
-          <span className="stream-next-label">Next</span>
         </div>
       )}
     </div>
@@ -204,17 +325,9 @@ function ServiceCarousel({ items, onAction }) {
   const [paused, setPaused] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const total = items.length;
-  const autoplayMs = 5000;
-
-  useEffect(() => {
-    if (paused) return undefined;
-    const timer = setInterval(() => {
-      setIndex((current) => (current + 1) % total);
-    }, autoplayMs);
-    return () => clearInterval(timer);
-  }, [paused, total]);
 
   const active = items[index];
+  const advance = () => setIndex((current) => (current + 1) % total);
 
   // A light, physical tilt that follows the cursor across the image panel,
   // so the floating photo card reads as something you can reach out and
@@ -281,6 +394,7 @@ function ServiceCarousel({ items, onAction }) {
                 paused={paused}
                 badge={item.badge}
                 badgeIcon={cloneElement(item.icon, { size: 13 })}
+                onLoopComplete={advance}
               />
             </div>
           ))}
