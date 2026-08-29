@@ -12,6 +12,7 @@ import {
   MessageCircle,
   Phone,
   Sun,
+  Umbrella,
   Wrench,
   X,
   Zap,
@@ -20,44 +21,77 @@ import "./index.css";
 
 const whatsappNumber = "254759341122";
 
-// Each service is paired with a photo from real Elitex work, so the
-// services carousel doubles as the "our work" showcase.
+// Each service carries 2-3 real photos from Elitex projects. The carousel
+// switches between services, and within the active service the photos
+// themselves crossfade like a short slideshow.
 const services = [
   {
     icon: <Sun size={26} />,
     title: "Solar Installation",
     description: "Professional solar system design and installation for homes, businesses, institutions, and farms.",
-    sources: ["/images/solar-installation.jpeg", "/images/solar-installation.jpg"],
+    images: [
+      ["/images/solar-installation.jpeg", "/images/solar-installation.jpg"],
+      ["/images/Professional-installation-services.jpeg"],
+    ],
   },
   {
     icon: <Battery size={26} />,
     title: "Solar Backup Systems",
     description: "Reliable battery and backup solutions designed to keep your home or business powered when you need it most.",
-    sources: ["/images/solar-products.jpeg", "/images/solar-products.jpg"],
+    images: [
+      ["/images/solar-products.jpeg", "/images/solar-products.jpg"],
+      ["/images/project-result.jpeg"],
+    ],
   },
   {
     icon: <Droplets size={26} />,
     title: "Solar Water Pumping",
     description: "Efficient solar-powered water pumping systems for farms, livestock, homes, and agricultural projects.",
-    sources: ["/images/water-pumps.jpeg", "/images/water-pumps.jpg"],
+    images: [
+      ["/images/water-pumps.jpeg", "/images/water-pumps.jpg"],
+      ["/images/showcase/water-pump-river.jpg"],
+      ["/images/showcase/water-pump-pond.jpg"],
+    ],
   },
   {
     icon: <Wrench size={26} />,
     title: "Borehole Drilling",
     description: "Professional borehole drilling solutions that help homes, businesses, and farms access reliable water.",
-    sources: ["/images/solar-pumping-project.jpeg", "/images/solar-pumping-project.jpg"],
+    images: [
+      ["/images/solar-pumping-project.jpeg", "/images/solar-pumping-project.jpg"],
+      ["/images/showcase/borehole-rig-truck.jpg"],
+      ["/images/showcase/borehole-flowing.jpg"],
+    ],
   },
   {
     icon: <Zap size={26} />,
     title: "Solar Maintenance",
     description: "Inspection, troubleshooting, maintenance, and repair services to keep your solar system performing efficiently.",
-    sources: ["/images/elitex-engineers.jpg", "/images/elitex-engineers.jpeg"],
+    images: [
+      ["/images/elitex-engineers.jpg", "/images/elitex-engineers.jpeg"],
+      ["/images/sollar.education.jpeg"],
+      ["/images/showcase/maintenance-technician-check.jpg"],
+    ],
   },
   {
     icon: <Leaf size={26} />,
     title: "Agro Innovation",
     description: "Practical agricultural and energy innovations designed to support productivity and sustainable farming.",
-    sources: ["/images/services.jpeg", "/images/services.jpg"],
+    images: [
+      ["/images/services.jpeg", "/images/services.jpg"],
+      ["/images/showcase/agro-drip-irrigation.jpg"],
+      ["/images/showcase/agro-watering-cabbage.jpg"],
+    ],
+  },
+  {
+    icon: <Umbrella size={26} />,
+    title: "Solar Shade Structures",
+    description: "Elevated solar shade and carport structures that generate clean power while shading homes, yards, and farm equipment.",
+    images: [
+      ["/images/showcase/solar-shade-hero.jpg"],
+      ["/images/showcase/solar-shade-angled.jpg"],
+      ["/images/showcase/solar-shade-watertank.jpg"],
+    ],
   },
 ];
 
@@ -85,6 +119,42 @@ function SafeImage({ sources, alt, className = "" }) {
       loading="lazy"
       onError={handleImageError}
     />
+  );
+}
+
+// Cycles through a service's 2-3 photos with a crossfade + slow zoom while
+// its slide is active, like a short looping video clip.
+function ImageStream({ images, alt, active }) {
+  const [frame, setFrame] = useState(0);
+  const count = images.length;
+
+  useEffect(() => {
+    if (!active || count <= 1) return undefined;
+    const timer = setInterval(() => {
+      setFrame((current) => (current + 1) % count);
+    }, 3200);
+    return () => clearInterval(timer);
+  }, [active, count]);
+
+  return (
+    <div className="stream">
+      {images.map((sources, i) => (
+        <div
+          key={i}
+          className={i === frame ? "stream-frame is-active" : "stream-frame"}
+          aria-hidden={i !== frame}
+        >
+          <SafeImage sources={sources} alt={`${alt} photo ${i + 1}`} className="stream-image" />
+        </div>
+      ))}
+      {count > 1 && (
+        <div className="stream-dots" aria-hidden="true">
+          {images.map((_, i) => (
+            <span key={i} className={i === frame ? "stream-dot is-active" : "stream-dot"} />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -143,7 +213,7 @@ function ServiceCarousel({ items, onAction }) {
             className={i === index ? "showcase-frame is-active" : "showcase-frame"}
             aria-hidden={i !== index}
           >
-            <SafeImage sources={item.sources} alt={item.title} className="showcase-image" />
+            <ImageStream images={item.images} alt={item.title} active={i === index} />
           </div>
         ))}
 

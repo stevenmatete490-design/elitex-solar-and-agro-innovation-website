@@ -101,8 +101,16 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-stage { position: relative; min-height: 480px; }
 .showcase-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 650ms var(--ease-out); }
 .showcase-frame.is-active { opacity: 1; z-index: 1; }
-.showcase-image { width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: transform 6000ms linear; }
-.showcase-frame.is-active .showcase-image { transform: scale(1.09); }
+
+.stream { position: absolute; inset: 0; }
+.stream-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 900ms var(--ease-out); }
+.stream-frame.is-active { opacity: 1; z-index: 1; }
+.stream-image { width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: transform 3400ms linear; }
+.stream-frame.is-active .stream-image { transform: scale(1.07); }
+.stream-dots { position: absolute; top: 20px; right: 20px; z-index: 3; display: flex; gap: 6px; }
+.stream-dot { width: 6px; height: 6px; border-radius: 50%; background: oklch(100% 0 0 / 0.35); transition: background 260ms var(--ease-out), transform 260ms var(--ease-out); }
+.stream-dot.is-active { background: var(--lime); transform: scale(1.35); }
+
 .showcase-overlay { position: absolute; left: 28px; right: 28px; bottom: 28px; z-index: 2; max-width: 460px; padding: 22px 24px; border: 1px solid oklch(100% 0 0 / 0.16); border-radius: 18px; background: oklch(14% 0.03 145 / 0.62); backdrop-filter: blur(16px); animation: showcaseOverlayIn 550ms var(--ease-out); }
 .showcase-overlay-index { display: block; margin-bottom: 8px; color: var(--lime); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; }
 .showcase-overlay strong { display: block; margin-bottom: 8px; font-family: "Playfair Display", Georgia, serif; font-size: 1.5rem; line-height: 1.1; color: oklch(99% 0.005 145); }
