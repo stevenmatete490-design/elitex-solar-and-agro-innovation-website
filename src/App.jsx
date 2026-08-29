@@ -1,4 +1,4 @@
-import { cloneElement, useEffect, useMemo, useRef, useState } from "react";
+import { cloneElement, useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
   Battery,
@@ -144,8 +144,8 @@ const COVER_MS = 900;
 const REEL_STEP = 2600;
 const GRID_HOLD = 4200;
 const EXIT_MS = 750;
-const GAP_MS = 400;
-const TILE_GAP = 4;
+const GAP_MS = 180;
+const TILE_GAP = 3;
 const HIDDEN_TILE = { left: "50%", top: "50%", width: "6%", height: "6%", opacity: 0, zIndex: 0 };
 
 function buildStreamTimeline(count) {
@@ -246,28 +246,19 @@ function streamTileGeometry(i, ctx) {
   return { style: HIDDEN_TILE, hero: false };
 }
 
-function ImageStream({ images, alt, active, paused, badge, badgeIcon, onLoopComplete }) {
+function ImageStream({ images, alt, active, paused, badge, badgeIcon }) {
   const count = images.length;
   const { cues, total } = useMemo(() => buildStreamTimeline(count), [count]);
   const [elapsed, setElapsed] = useState(0);
-  const onLoopCompleteRef = useRef(onLoopComplete);
 
-  useEffect(() => {
-    onLoopCompleteRef.current = onLoopComplete;
-  }, [onLoopComplete]);
-
+  // Loops this one service's own sequence indefinitely — it never advances
+  // to another service on its own. Only a manual tab click changes which
+  // service is showing.
   useEffect(() => {
     if (!active || paused) return undefined;
     const STEP = 90;
     const id = setInterval(() => {
-      setElapsed((value) => {
-        const next = value + STEP;
-        if (next >= total) {
-          onLoopCompleteRef.current?.();
-          return 0;
-        }
-        return next;
-      });
+      setElapsed((value) => (value + STEP >= total ? 0 : value + STEP));
     }, STEP);
     return () => clearInterval(id);
   }, [active, paused, total]);
@@ -327,7 +318,6 @@ function ServiceCarousel({ items, onAction }) {
   const total = items.length;
 
   const active = items[index];
-  const advance = () => setIndex((current) => (current + 1) % total);
 
   // A light, physical tilt that follows the cursor across the image panel,
   // so the floating photo card reads as something you can reach out and
@@ -387,7 +377,6 @@ function ServiceCarousel({ items, onAction }) {
                 paused={paused}
                 badge={item.badge}
                 badgeIcon={cloneElement(item.icon, { size: 13 })}
-                onLoopComplete={advance}
               />
             </div>
           ))}
@@ -470,8 +459,11 @@ function App() {
       <header className={scrolled ? "navbar is-scrolled" : "navbar"}>
         <div className="container nav-container">
           <button className="logo" onClick={() => scrollToSection("home")} aria-label="Go to Elitex homepage">
+            {/* The navbar always sits over a dark green backdrop (the hero,
+                or the scrolled bar's own dark fill), so it always takes the
+                white mark. */}
             <SafeImage
-              sources={["/images/elitex-logo-dark-cropped.jpg", "/images/elitex-logo-dark.jpg"]}
+              sources={["/images/elitex-mark-white.png"]}
               alt="Elitex Solar and Agro Innovations"
               className="logo-image"
             />
@@ -667,8 +659,9 @@ function App() {
       <footer className="footer">
         <div className="container footer-content">
           <div className="footer-brand">
+            {/* Footer is dark green too, so it takes the white mark. */}
             <SafeImage
-              sources={["/images/elitex-logo-dark-cropped.jpg", "/images/elitex-logo-dark.jpg"]}
+              sources={["/images/elitex-mark-white.png"]}
               alt="Elitex Solar and Agro Innovations"
               className="footer-logo"
             />

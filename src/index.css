@@ -147,12 +147,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   border-radius: 14px;
   box-shadow: 0 18px 40px oklch(30% 0.03 75 / 0.22), 0 4px 10px oklch(30% 0.03 75 / 0.12);
   transition:
-    left 850ms cubic-bezier(0.65, 0, 0.35, 1),
-    top 850ms cubic-bezier(0.65, 0, 0.35, 1),
-    width 850ms cubic-bezier(0.65, 0, 0.35, 1),
-    height 850ms cubic-bezier(0.65, 0, 0.35, 1),
-    transform 850ms cubic-bezier(0.65, 0, 0.35, 1),
-    opacity 500ms ease,
+    left 950ms cubic-bezier(0.45, 0, 0.2, 1),
+    top 950ms cubic-bezier(0.45, 0, 0.2, 1),
+    width 950ms cubic-bezier(0.45, 0, 0.2, 1),
+    height 950ms cubic-bezier(0.45, 0, 0.2, 1),
+    transform 950ms cubic-bezier(0.45, 0, 0.2, 1),
+    opacity 600ms ease,
     box-shadow 400ms ease;
 }
 .stream-tile.is-hero { border-radius: 0; box-shadow: none; }
