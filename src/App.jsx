@@ -543,6 +543,13 @@ function App() {
                 className="hero-photo-img"
               />
             </div>
+            <div className="hero-photo-circle hero-photo-circle-xs hero-photo-circle-product">
+              <SafeImage
+                sources={["/images/cabbage.png"]}
+                alt=""
+                className="hero-photo-img"
+              />
+            </div>
           </div>
 
           <svg className="hero-curve" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
