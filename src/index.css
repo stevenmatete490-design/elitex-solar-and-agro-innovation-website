@@ -15,10 +15,10 @@
   --lime: oklch(80% 0.18 112);
   --lime-dark: oklch(46% 0.12 125);
   --paper: oklch(98% 0.009 80);
-  --clay: oklch(46% 0.1 38);
-  --clay-deep: oklch(22% 0.055 35);
-  --sky: oklch(42% 0.09 240);
-  --sky-deep: oklch(19% 0.055 240);
+  --clay: oklch(40% 0.085 122);
+  --clay-deep: oklch(20% 0.05 122);
+  --sky: oklch(36% 0.07 172);
+  --sky-deep: oklch(18% 0.05 170);
   --display-font: "Bricolage Grotesque", "DM Sans", system-ui, sans-serif;
   --radius-lg: 24px;
   --radius-md: 14px;
@@ -192,9 +192,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @keyframes showcaseInfoIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
 /* --- "What you get" bento grid: one light card with the full service
-   lineup, a dark card for the team/process story, and two accent cards
-   (soil-clay for tailored projects, sky for after-install support) — each
-   built from real project photos rather than icons. --- */
+   lineup, a dark forest card for the team/process story, and two more
+   accent cards (olive and teal-green) — all kept within the site's own
+   forest/lime brand family rather than unrelated hues. --- */
 .bento-section { background: var(--paper); }
 .bento-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 44px; }
 .bento-header h2 { margin-bottom: 14px; }
@@ -213,11 +213,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .bento-card--dark { grid-column: 2 / 4; grid-row: 1; background: linear-gradient(160deg, var(--forest) 0%, var(--forest-deep) 100%); color: oklch(98% 0.01 145); min-height: 300px; }
 .bento-card--dark > p { color: oklch(92% 0.012 145 / 0.72); }
 
-.bento-card--clay { grid-column: 2; grid-row: 2; background: linear-gradient(160deg, var(--clay) 0%, var(--clay-deep) 100%); color: oklch(98% 0.01 60); }
-.bento-card--clay > p { color: oklch(96% 0.015 60 / 0.78); }
+.bento-card--clay { grid-column: 2; grid-row: 2; background: linear-gradient(160deg, var(--clay) 0%, var(--clay-deep) 100%); color: oklch(98% 0.01 122); }
+.bento-card--clay > p { color: oklch(96% 0.015 122 / 0.78); }
 
-.bento-card--sky { grid-column: 3; grid-row: 2; background: linear-gradient(160deg, var(--sky) 0%, var(--sky-deep) 100%); color: oklch(98% 0.01 235); }
-.bento-card--sky > p { color: oklch(96% 0.012 235 / 0.78); }
+.bento-card--sky { grid-column: 3; grid-row: 2; background: linear-gradient(160deg, var(--sky) 0%, var(--sky-deep) 100%); color: oklch(98% 0.01 170); }
+.bento-card--sky > p { color: oklch(96% 0.012 170 / 0.78); }
 
 .bento-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
 .bento-tab { padding: 7px 14px; border-radius: 999px; background: var(--paper); color: var(--muted); font-size: 0.78rem; font-weight: 700; }
@@ -235,7 +235,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .bento-step-arrow { color: oklch(98% 0.01 145 / 0.4); flex: 0 0 auto; }
 
 .bento-project-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 24px; }
-.bento-project-tag { padding: 9px 16px; border-radius: 999px; background: oklch(100% 0 0 / 0.12); border: 1px solid oklch(100% 0 0 / 0.22); color: oklch(98% 0.01 60); font-size: 0.82rem; font-weight: 700; }
+.bento-project-tag { padding: 9px 16px; border-radius: 999px; background: oklch(100% 0 0 / 0.12); border: 1px solid oklch(100% 0 0 / 0.22); color: oklch(98% 0.01 122); font-size: 0.82rem; font-weight: 700; }
 
 .bento-inline-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; align-self: flex-start; padding: 12px 20px; border: 0; border-radius: 999px; background: oklch(98% 0.009 80); color: var(--sky-deep); font-weight: 700; font-size: 0.9rem; box-shadow: var(--shadow-sm); transition: transform 220ms var(--ease-out); }
 .bento-inline-btn:hover { transform: translateY(-2px); }
