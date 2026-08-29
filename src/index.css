@@ -237,12 +237,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .bento-thumb-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 400ms var(--ease-out); }
 .bento-thumb:hover .bento-thumb-image { transform: scale(1.06); }
 
-.bento-steps { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: auto; padding-top: 28px; }
-.bento-step { display: flex; align-items: center; gap: 12px; padding: 10px 18px 10px 10px; border-radius: 999px; background: oklch(100% 0 0 / 0.08); border: 1px solid oklch(100% 0 0 / 0.16); }
-.bento-step-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: var(--forest-deep); flex: 0 0 auto; }
-.bento-step-label { color: oklch(98% 0.01 145); font-weight: 700; font-size: 0.92rem; }
-.bento-step-arrow { color: oklch(98% 0.01 145 / 0.4); flex: 0 0 auto; }
-
 .bento-inline-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; align-self: flex-start; padding: 12px 20px; border: 0; border-radius: 999px; background: oklch(98% 0.009 80); color: var(--sky-deep); font-weight: 700; font-size: 0.9rem; box-shadow: var(--shadow-sm); transition: transform 220ms var(--ease-out); }
 .bento-inline-btn:hover { transform: translateY(-2px); }
 .cta-section { padding: 78px 0; background: var(--lime-dark); color: oklch(98% 0.01 145); }

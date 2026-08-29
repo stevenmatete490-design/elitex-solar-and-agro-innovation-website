@@ -1,13 +1,11 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowRight,
   Battery,
   CheckCircle2,
-  ClipboardCheck,
   Droplets,
   ImageOff,
   Leaf,
-  LifeBuoy,
   Mail,
   MapPin,
   Menu,
@@ -95,12 +93,6 @@ const services = [
       ["/images/showcase/solar-shade-watertank.jpg"],
     ],
   },
-];
-
-const accreditedSteps = [
-  { label: "Assess", icon: ClipboardCheck },
-  { label: "Install", icon: Wrench },
-  { label: "Support", icon: LifeBuoy },
 ];
 
 function SafeImage({ sources, alt, className = "" }) {
@@ -640,21 +632,6 @@ function App() {
                 <div className="bento-card bento-card--dark">
                   <h3>One accredited team, every step</h3>
                   <p>From first site assessment to final commissioning and after-sales care — the same technicians see your project through, not a rotating crew.</p>
-                  <div className="bento-steps">
-                    {accreditedSteps.map((step, i) => (
-                      <Fragment key={step.label}>
-                        <div className="bento-step">
-                          <span className="bento-step-icon">
-                            <step.icon size={19} />
-                          </span>
-                          <span className="bento-step-label">{step.label}</span>
-                        </div>
-                        {i < accreditedSteps.length - 1 && (
-                          <ArrowRight className="bento-step-arrow" size={18} aria-hidden="true" />
-                        )}
-                      </Fragment>
-                    ))}
-                  </div>
                 </div>
 
                 <div className="bento-row-split">
