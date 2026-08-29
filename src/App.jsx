@@ -344,6 +344,27 @@ function App() {
               </div>
             </div>
           </div>
+
+          <div className="hero-photos" aria-hidden="true">
+            <div className="hero-photo hero-photo-a">
+              <SafeImage
+                sources={["/images/showcase/solar-shade-hero.jpg"]}
+                alt=""
+                className="hero-photo-img"
+              />
+            </div>
+            <div className="hero-photo hero-photo-b">
+              <SafeImage
+                sources={["/images/showcase/water-pump-river.jpg"]}
+                alt=""
+                className="hero-photo-img"
+              />
+            </div>
+          </div>
+
+          <svg className="hero-curve" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,42 C 320,110 1120,-30 1440,42 L1440,100 L0,100 Z" fill="var(--paper)" />
+          </svg>
         </section>
 
         <section id="about" className="section about-section">
