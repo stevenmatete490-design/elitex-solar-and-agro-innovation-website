@@ -629,9 +629,9 @@ function App() {
                 </div>
                 <div className="bento-thumb-grid">
                   {[
-                    ["/images/solar-installation.jpeg", "Solar Installation", Sun],
-                    ["/images/water-pumps.jpeg", "Water Pumping", Droplets],
-                    ["/images/showcase/borehole-flowing.jpg", "Borehole Drilling", Wrench],
+                    ["/images/whychooseus/solar-battery.jpg", "Solar Systems", Battery],
+                    ["/images/whychooseus/water-pump.png", "Water Pumping", Droplets],
+                    ["/images/whychooseus/borehole-drilling.jpg", "Borehole Drilling", Wrench],
                     ["/images/showcase/agro-drip-irrigation.jpg", "Agro Innovation", Leaf],
                   ].map(([src, label, Icon]) => (
                     <div className="bento-thumb" key={label}>
