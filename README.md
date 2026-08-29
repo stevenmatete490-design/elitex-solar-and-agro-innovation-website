@@ -1,16 +1,33 @@
-# React + Vite
+# Elitex Solar & Agro Innovations — Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The marketing website for Elitex Solar & Agro Innovations Limited: solar installation, solar backup systems, solar water pumping, borehole drilling, solar maintenance, and agro innovation services.
 
-Currently, two official plugins are available:
+Built with React and Vite.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Development
 
-## React Compiler
+```bash
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Production build
 
-## Expanding the ESLint configuration
+```bash
+npm run build
+npm run preview
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Linting
+
+```bash
+npm run lint
+```
+
+## Project structure
+
+- `index.html` — page shell, SEO/meta tags
+- `src/App.jsx` — all page sections (hero, about, services, gallery, why us, contact)
+- `src/index.css` — global styles and design tokens
+- `public/images/` — site imagery
+- `public/favicon.svg` — site icon

@@ -157,7 +157,7 @@ function App() {
         <div className="container nav-container">
           <button className="logo" onClick={() => scrollToSection("home")} aria-label="Go to Elitex homepage">
             <SafeImage
-              sources={["/images/elitex-logo-dark.jpg", "/images/elitex-logo-dark.jpeg"]}
+              sources={["/images/elitex-logo-dark-cropped.jpg", "/images/elitex-logo-dark.jpg"]}
               alt="Elitex Solar and Agro Innovations"
               className="logo-image"
             />
@@ -362,8 +362,14 @@ function App() {
 
       <footer className="footer">
         <div className="container footer-content">
-          <div className="footer-brand"><strong>ELITEX</strong><span>Solar & Agro Innovations</span></div>
-          <p>Â© 2026 Elitex Solar & Agro Innovations Limited. All rights reserved.</p>
+          <div className="footer-brand">
+            <SafeImage
+              sources={["/images/elitex-logo-dark-cropped.jpg", "/images/elitex-logo-dark.jpg"]}
+              alt="Elitex Solar and Agro Innovations"
+              className="footer-logo"
+            />
+          </div>
+          <p>© 2026 Elitex Solar & Agro Innovations Limited. All rights reserved.</p>
         </div>
       </footer>
     </>
