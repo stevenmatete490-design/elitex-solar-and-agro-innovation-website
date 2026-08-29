@@ -122,14 +122,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 750ms var(--ease-out); }
 .showcase-frame.is-active { opacity: 1; z-index: 1; }
 
-.stream { position: absolute; inset: 0; }
-.stream-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; filter: blur(10px); transform: scale(1.045); transition: opacity 950ms var(--ease-out), filter 950ms var(--ease-out), transform 1100ms var(--ease-out); }
-.stream-frame.is-active { opacity: 1; filter: blur(0); transform: scale(1); z-index: 1; }
-.stream-image { width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: transform 6000ms linear; }
-.stream-frame.is-active .stream-image { transform: scale(1.08); }
+.stream { position: absolute; inset: 0; overflow: hidden; }
+.stream-track { display: flex; height: 100%; transition: transform 900ms cubic-bezier(0.65, 0, 0.35, 1); }
+.stream-slide { position: relative; flex: 0 0 100%; height: 100%; overflow: hidden; }
+.stream-image { width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: transform 5000ms linear; }
+.stream-image.is-active { transform: scale(1.07); }
+
+.stream-next { position: absolute; right: 14px; bottom: 14px; z-index: 4; width: 30%; max-width: 128px; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden; border: 4px solid var(--paper); box-shadow: var(--shadow-md); background: var(--forest-deep); animation: streamNextIn 700ms var(--ease-out) both; }
+.stream-next-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+
 .stream-dots { position: absolute; top: 18px; right: 18px; z-index: 3; display: flex; gap: 6px; }
 .stream-dot { width: 6px; height: 6px; border-radius: 50%; background: oklch(100% 0 0 / 0.35); transition: background 260ms var(--ease-out), transform 260ms var(--ease-out); }
 .stream-dot.is-active { background: var(--lime); transform: scale(1.35); }
+
+@keyframes streamNextIn { from { opacity: 0; transform: translate(22px, 14px) scale(0.9); } to { opacity: 1; transform: translate(0, 0) scale(1); } }
 
 @keyframes showcaseFadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes showcaseInfoIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }

@@ -122,8 +122,10 @@ function SafeImage({ sources, alt, className = "" }) {
   );
 }
 
-// Cycles through a service's 2-3 photos with a crossfade + slow zoom while
-// its slide is active, like a short looping video clip.
+// Cycles through a service's 2-3 photos as a filmstrip: each new photo slides
+// in from the right while the previous one slides out to the left, and a
+// small preview chip teases the next shot in the corner, like a short,
+// hand-directed product reel rather than a plain slideshow.
 function ImageStream({ images, alt, active }) {
   const [frame, setFrame] = useState(0);
   const count = images.length;
@@ -132,21 +134,32 @@ function ImageStream({ images, alt, active }) {
     if (!active || count <= 1) return undefined;
     const timer = setInterval(() => {
       setFrame((current) => (current + 1) % count);
-    }, 3200);
+    }, 4200);
     return () => clearInterval(timer);
   }, [active, count]);
 
+  const nextFrame = (frame + 1) % count;
+
   return (
     <div className="stream">
-      {images.map((sources, i) => (
-        <div
-          key={i}
-          className={i === frame ? "stream-frame is-active" : "stream-frame"}
-          aria-hidden={i !== frame}
-        >
-          <SafeImage sources={sources} alt={`${alt} photo ${i + 1}`} className="stream-image" />
+      <div className="stream-track" style={{ transform: `translateX(-${frame * 100}%)` }}>
+        {images.map((sources, i) => (
+          <div key={i} className="stream-slide" aria-hidden={i !== frame}>
+            <SafeImage
+              sources={sources}
+              alt={`${alt} photo ${i + 1}`}
+              className={i === frame ? "stream-image is-active" : "stream-image"}
+            />
+          </div>
+        ))}
+      </div>
+
+      {count > 1 && (
+        <div key={frame} className="stream-next" aria-hidden="true">
+          <SafeImage sources={images[nextFrame]} alt="" className="stream-next-img" />
         </div>
-      ))}
+      )}
+
       {count > 1 && (
         <div className="stream-dots" aria-hidden="true">
           {images.map((_, i) => (
