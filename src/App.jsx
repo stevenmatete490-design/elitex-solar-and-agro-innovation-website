@@ -233,6 +233,16 @@ const sectionIds = ["home", "about", "services", "why-us", "contact"];
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [scrolled, setScrolled] = useState(false);
+
+  // The navbar stays transparent over the hero and only picks up a solid
+  // backdrop once the page has scrolled past it, so text stays readable.
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 60);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navigation = [
     ["home", "Home"],
@@ -281,7 +291,7 @@ function App() {
 
   return (
     <>
-      <header className="navbar">
+      <header className={scrolled ? "navbar is-scrolled" : "navbar"}>
         <div className="container nav-container">
           <button className="logo" onClick={() => scrollToSection("home")} aria-label="Go to Elitex homepage">
             <SafeImage

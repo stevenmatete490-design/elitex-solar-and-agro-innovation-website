@@ -41,14 +41,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .section-tag { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; color: var(--lime-dark); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
 .light-tag { color: var(--lime); }
 
-.navbar { position: fixed; inset: 0 0 auto; z-index: 20; background: transparent; padding-top: 18px; }
-.nav-container { min-height: 74px; display: flex; align-items: center; gap: 22px; background: oklch(17% 0.055 145 / 0.96); border: 1px solid oklch(100% 0 0 / 0.08); border-radius: 999px; padding: 8px 10px 8px 26px; box-shadow: var(--shadow-md); }
+.navbar { position: fixed; inset: 0 0 auto; z-index: 20; background: transparent; padding: 26px 0; transition: background 260ms var(--ease-out), padding 260ms var(--ease-out), box-shadow 260ms var(--ease-out); }
+.navbar.is-scrolled { padding: 14px 0; background: oklch(17% 0.055 145 / 0.94); backdrop-filter: blur(14px); box-shadow: var(--shadow-sm); }
+.nav-container { min-height: 44px; display: flex; align-items: center; gap: 22px; }
 .logo { display: flex; align-items: center; flex: 0 0 auto; border: 0; background: transparent; }
 .logo-image { height: 44px; width: auto; max-width: 170px; object-fit: contain; object-position: left center; }
-.nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; background: oklch(100% 0 0 / 0.05); padding: 6px; border-radius: 999px; }
-.nav-links button { min-height: 40px; padding: 0 18px; border: 0; border-radius: 999px; background: transparent; color: oklch(90% 0.012 145 / 0.72); font-size: 0.9rem; transition: background 220ms var(--ease-out), color 220ms var(--ease-out); }
-.nav-links button:hover { color: oklch(98% 0.01 145); }
-.nav-links button.is-active { background: var(--lime); color: var(--forest-deep); font-weight: 700; }
+.nav-links { display: flex; align-items: center; gap: clamp(18px, 2.4vw, 34px); margin-left: auto; }
+.nav-links button { min-height: 36px; padding: 0; border: 0; background: transparent; color: oklch(94% 0.012 145 / 0.78); font-size: 0.95rem; transition: color 220ms var(--ease-out); }
+.nav-links button:hover { color: oklch(99% 0.005 145); }
+.nav-links button.is-active { color: var(--lime); font-weight: 700; }
 .nav-cta, .primary-btn, .white-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 22px; border: 0; border-radius: 999px; font-weight: 700; transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out), background 220ms var(--ease-out); }
 .nav-cta { margin-left: 4px; background: var(--lime); color: var(--forest-deep); }
 .nav-cta:hover, .primary-btn:hover, .white-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
@@ -176,7 +177,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media (max-width: 900px) {
   .nav-cta { display: none; }
   .menu-button { display: grid; place-items: center; }
-  .nav-links { position: absolute; top: 92px; left: 24px; right: 24px; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 18px 12px; margin: 0; border-radius: 22px; background: var(--forest-deep); box-shadow: var(--shadow-md); }
+  .nav-links { position: absolute; top: 96px; left: 24px; right: 24px; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 18px 12px; margin: 0; border-radius: 22px; background: var(--forest-deep); box-shadow: var(--shadow-md); }
   .nav-links.active { display: flex; }
   .nav-links button { text-align: left; padding: 14px 6px; border-radius: 0; border-bottom: 1px solid oklch(100% 0 0 / 0.1); }
   .nav-links button.is-active { background: transparent; color: var(--lime); }
@@ -193,9 +194,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 @media (max-width: 640px) {
   .container { width: min(100% - 32px, 1180px); }
-  .nav-container { min-height: 62px; padding: 6px 8px 6px 18px; }
-  .logo-image { height: 38px; max-width: 130px; }
-  .nav-links { top: 82px; left: 16px; right: 16px; padding-inline: 14px; }
+  .navbar { padding: 18px 0; }
+  .navbar.is-scrolled { padding: 12px 0; }
+  .nav-container { min-height: 36px; }
+  .logo-image { height: 34px; max-width: 130px; }
+  .nav-links { top: 76px; left: 16px; right: 16px; padding-inline: 14px; }
   .section { padding: 78px 0; }
   .hero { min-height: 700px; padding-top: 108px; }
   .hero h1 { font-size: clamp(2.9rem, 14vw, 4.35rem); }
