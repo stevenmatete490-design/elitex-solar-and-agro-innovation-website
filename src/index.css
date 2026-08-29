@@ -105,9 +105,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-tab:hover { color: var(--ink); }
 .showcase-tab.is-active { background: var(--forest-deep); color: oklch(98% 0.01 145); }
 .showcase-tab.is-active .showcase-tab-icon { opacity: 1; color: var(--lime); }
-.showcase-tab-fill { position: absolute; left: 20px; right: 20px; bottom: 6px; height: 2px; border-radius: 2px; background: oklch(100% 0 0 / 0.18); overflow: hidden; }
-.showcase-tab-fill::after { content: ""; display: block; height: 100%; width: 0; background: var(--lime); animation: showcaseFill 5s linear forwards; }
-.showcase-carousel.is-paused .showcase-tab-fill::after { animation-play-state: paused; }
 
 .showcase-stage { position: relative; min-height: 480px; border-radius: 28px; background: var(--forest-deep); overflow: hidden; box-shadow: var(--shadow-md); }
 .showcase-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 650ms var(--ease-out); }
@@ -128,7 +125,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-overlay p { max-width: 42ch; margin-bottom: 14px; color: oklch(92% 0.01 145 / 0.78); font-size: 0.88rem; line-height: 1.6; }
 .showcase-overlay button { display: inline-flex; align-items: center; gap: 8px; padding: 0; border: 0; background: transparent; color: var(--lime); font-weight: 700; }
 
-@keyframes showcaseFill { from { width: 0; } to { width: 100%; } }
 @keyframes showcaseFadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes showcaseOverlayIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 

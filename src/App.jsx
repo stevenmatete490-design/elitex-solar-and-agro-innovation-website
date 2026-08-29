@@ -195,9 +195,6 @@ function ServiceCarousel({ items, onAction }) {
             >
               <span className="showcase-tab-icon">{item.icon}</span>
               <span>{item.title}</span>
-              {isActive && (
-                <span key={index} className="showcase-tab-fill" />
-              )}
             </button>
           );
         })}
