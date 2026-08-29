@@ -201,21 +201,24 @@ function ServiceCarousel({ items, onAction }) {
       </div>
 
       <div className="showcase-stage">
-        {items.map((item, i) => (
-          <div
-            key={item.title}
-            className={i === index ? "showcase-frame is-active" : "showcase-frame"}
-            aria-hidden={i !== index}
-          >
-            <ImageStream images={item.images} alt={item.title} active={i === index} />
-          </div>
-        ))}
-
-        <div key={index} className="showcase-overlay">
-          <span className="showcase-overlay-index">{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
-          <strong>{active.title}</strong>
+        <div key={index} className="showcase-info">
+          <span className="showcase-info-index">{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+          <h3>{active.title}</h3>
           <p>{active.description}</p>
           <button onClick={onAction}>Talk to Us <ArrowRight size={16} /></button>
+        </div>
+
+        <div className="showcase-visual">
+          <div className="showcase-visual-glow" aria-hidden="true" />
+          {items.map((item, i) => (
+            <div
+              key={item.title}
+              className={i === index ? "showcase-frame is-active" : "showcase-frame"}
+              aria-hidden={i !== index}
+            >
+              <ImageStream images={item.images} alt={item.title} active={i === index} />
+            </div>
+          ))}
         </div>
       </div>
     </div>
