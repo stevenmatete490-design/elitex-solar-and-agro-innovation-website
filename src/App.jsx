@@ -636,42 +636,41 @@ function App() {
                 </div>
               </div>
 
-              <div className="bento-card bento-card--dark">
-                <h3>One accredited team, every step</h3>
-                <p>From first site assessment to final commissioning and after-sales care — the same technicians see your project through, not a rotating crew.</p>
-                <div className="bento-steps">
-                  {accreditedSteps.map((step, i) => (
-                    <Fragment key={step.label}>
-                      <div className="bento-step">
-                        <span className="bento-step-icon">
-                          <step.icon size={19} />
-                        </span>
-                        <span className="bento-step-label">{step.label}</span>
-                      </div>
-                      {i < accreditedSteps.length - 1 && (
-                        <ArrowRight className="bento-step-arrow" size={18} aria-hidden="true" />
-                      )}
-                    </Fragment>
-                  ))}
+              <div className="bento-col-right">
+                <div className="bento-card bento-card--dark">
+                  <h3>One accredited team, every step</h3>
+                  <p>From first site assessment to final commissioning and after-sales care — the same technicians see your project through, not a rotating crew.</p>
+                  <div className="bento-steps">
+                    {accreditedSteps.map((step, i) => (
+                      <Fragment key={step.label}>
+                        <div className="bento-step">
+                          <span className="bento-step-icon">
+                            <step.icon size={19} />
+                          </span>
+                          <span className="bento-step-label">{step.label}</span>
+                        </div>
+                        {i < accreditedSteps.length - 1 && (
+                          <ArrowRight className="bento-step-arrow" size={18} aria-hidden="true" />
+                        )}
+                      </Fragment>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="bento-card bento-card--clay">
-                <h3>Every project, tailored</h3>
-                <p>Every project is assessed individually — homes, farms, and institutions each get a system sized and engineered for them.</p>
-                <div className="bento-project-tags">
-                  <span className="bento-project-tag">Residential</span>
-                  <span className="bento-project-tag">Farm Project</span>
-                  <span className="bento-project-tag">Institutional</span>
+                <div className="bento-row-split">
+                  <div className="bento-card bento-card--clay">
+                    <h3>Every project, tailored</h3>
+                    <p>Every project is assessed individually — homes, farms, and institutions each get a system sized and engineered for them.</p>
+                  </div>
+
+                  <div className="bento-card bento-card--sky">
+                    <h3>Support that doesn't stop at install</h3>
+                    <p>Maintenance, troubleshooting, and repairs — one call away whenever you need us.</p>
+                    <button className="bento-inline-btn" onClick={() => scrollToSection("contact")}>
+                      Talk to Us <ArrowRight size={16} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-
-              <div className="bento-card bento-card--sky">
-                <h3>Support that doesn't stop at install</h3>
-                <p>Maintenance, troubleshooting, and repairs — one call away whenever you need us.</p>
-                <button className="bento-inline-btn" onClick={() => scrollToSection("contact")}>
-                  Talk to Us <ArrowRight size={16} />
-                </button>
               </div>
             </div>
           </div>

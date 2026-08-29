@@ -36,7 +36,7 @@ a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
 
-.container { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+.container { width: min(1400px, calc(100% - 64px)); margin-inline: auto; }
 .section { padding: 112px 0; scroll-margin-top: 112px; }
 .section h2, .hero h1, .cta-content h2 { font-family: var(--display-font); font-weight: 800; text-wrap: balance; }
 .section h2 { max-width: 720px; font-size: clamp(2.4rem, 5vw, 4.6rem); line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 24px; }
@@ -202,22 +202,30 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .bento-header > div { flex: 1 1 auto; }
 .bento-cta { flex: 0 0 auto; }
 
-.bento-grid { display: grid; grid-template-columns: 0.85fr 0.575fr 0.575fr; grid-auto-rows: minmax(0, auto); gap: 20px; }
+/* Two real grid columns: the light card on the left, and a right-hand
+   column that stacks its own cards by their own natural height. The
+   light card used to span both rows of a 3-column grid, which forced
+   the shorter clay/sky row to stretch and swallow the extra space as
+   dead padding — a plain flex column sizes each card by its own
+   content instead, so nothing bloats to fill space it doesn't need. */
+.bento-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; align-items: start; gap: 20px; }
+.bento-col-right { display: flex; flex-direction: column; gap: 20px; }
+.bento-row-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
 .bento-card { position: relative; display: flex; flex-direction: column; padding: clamp(26px, 3vw, 34px); border-radius: var(--radius-lg); overflow: hidden; }
 .bento-card h3 { font-family: var(--display-font); font-weight: 800; font-size: clamp(1.25rem, 1.6vw, 1.5rem); line-height: 1.15; margin-bottom: 10px; }
 .bento-card > p { font-size: 0.94rem; line-height: 1.65; max-width: 48ch; }
 
-.bento-card--light { grid-column: 1; grid-row: 1 / 3; background: var(--soft); border: 1px solid var(--line); color: var(--ink); }
+.bento-card--light { background: var(--soft); border: 1px solid var(--line); color: var(--ink); }
 .bento-card--light > p { color: var(--muted); }
 
-.bento-card--dark { grid-column: 2 / 4; grid-row: 1; background: linear-gradient(160deg, var(--forest) 0%, var(--forest-deep) 100%); color: oklch(98% 0.01 145); min-height: 300px; }
+.bento-card--dark { background: linear-gradient(160deg, var(--forest) 0%, var(--forest-deep) 100%); color: oklch(98% 0.01 145); min-height: 220px; }
 .bento-card--dark > p { color: oklch(92% 0.012 145 / 0.72); }
 
-.bento-card--clay { grid-column: 2; grid-row: 2; background: linear-gradient(160deg, var(--clay) 0%, var(--clay-deep) 100%); color: oklch(98% 0.01 122); }
+.bento-card--clay { background: linear-gradient(160deg, var(--clay) 0%, var(--clay-deep) 100%); color: oklch(98% 0.01 122); min-height: 180px; }
 .bento-card--clay > p { color: oklch(96% 0.015 122 / 0.78); }
 
-.bento-card--sky { grid-column: 3; grid-row: 2; background: linear-gradient(160deg, var(--sky) 0%, var(--sky-deep) 100%); color: oklch(98% 0.01 170); }
+.bento-card--sky { background: linear-gradient(160deg, var(--sky) 0%, var(--sky-deep) 100%); color: oklch(98% 0.01 170); min-height: 180px; }
 .bento-card--sky > p { color: oklch(96% 0.012 170 / 0.78); }
 
 .bento-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
@@ -234,9 +242,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .bento-step-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: var(--forest-deep); flex: 0 0 auto; }
 .bento-step-label { color: oklch(98% 0.01 145); font-weight: 700; font-size: 0.92rem; }
 .bento-step-arrow { color: oklch(98% 0.01 145 / 0.4); flex: 0 0 auto; }
-
-.bento-project-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 24px; }
-.bento-project-tag { padding: 9px 16px; border-radius: 999px; background: oklch(100% 0 0 / 0.12); border: 1px solid oklch(100% 0 0 / 0.22); color: oklch(98% 0.01 122); font-size: 0.82rem; font-weight: 700; }
 
 .bento-inline-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; align-self: flex-start; padding: 12px 20px; border: 0; border-radius: 999px; background: oklch(98% 0.009 80); color: var(--sky-deep); font-weight: 700; font-size: 0.9rem; box-shadow: var(--shadow-sm); transition: transform 220ms var(--ease-out); }
 .bento-inline-btn:hover { transform: translateY(-2px); }
@@ -301,11 +306,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .showcase-info { padding: 24px 28px 44px; }
   .showcase-info p { max-width: 52ch; }
   .bento-header { flex-direction: column; align-items: flex-start; gap: 20px; }
-  .bento-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: auto; }
-  .bento-card--light { grid-column: 1 / 3; grid-row: 1; }
-  .bento-card--dark { grid-column: 1 / 3; grid-row: 2; }
-  .bento-card--clay { grid-column: 1; grid-row: 3; }
-  .bento-card--sky { grid-column: 2; grid-row: 3; }
+  .bento-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
@@ -333,11 +334,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .contact-form { padding: 20px; }
   .footer-content { align-items: flex-start; flex-direction: column; }
   .whatsapp-button { right: 16px; bottom: 16px; width: 54px; height: 54px; }
-  .bento-grid { grid-template-columns: 1fr; }
-  .bento-card--light, .bento-card--dark, .bento-card--clay, .bento-card--sky { grid-column: 1; }
-  .bento-card--light { grid-row: 1; }
-  .bento-card--dark { grid-row: 2; }
-  .bento-card--clay { grid-row: 3; }
-  .bento-card--sky { grid-row: 4; }
+  .bento-row-split { grid-template-columns: 1fr; }
   .bento-thumb-grid { grid-template-columns: 1fr 1fr; }
 }
