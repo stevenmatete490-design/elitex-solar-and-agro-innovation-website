@@ -194,7 +194,7 @@ function ServiceCarousel({ items, onAction }) {
               onBlur={() => setPaused(false)}
             >
               <span className="showcase-tab-icon">{item.icon}</span>
-              <span>{item.title}</span>
+              <span className="showcase-tab-label">{item.title}</span>
             </button>
           );
         })}

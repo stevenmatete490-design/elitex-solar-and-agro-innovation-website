@@ -99,9 +99,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-carousel { display: flex; flex-direction: column; gap: 26px; }
 
 .showcase-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 8px; border-radius: 999px; background: var(--paper); box-shadow: var(--shadow-sm); width: fit-content; max-width: 100%; overflow-x: auto; }
-.showcase-tab { position: relative; display: inline-flex; align-items: center; gap: 9px; flex: 0 0 auto; padding: 12px 20px; border: 0; border-radius: 999px; background: transparent; white-space: nowrap; color: var(--muted); font-size: 0.94rem; font-weight: 600; cursor: pointer; transition: background 220ms var(--ease-out), color 220ms var(--ease-out); }
+.showcase-tab { position: relative; display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; padding: 10px 16px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 0.86rem; font-weight: 600; cursor: pointer; transition: background 220ms var(--ease-out), color 220ms var(--ease-out); }
 .showcase-tab-icon { display: grid; place-items: center; width: 18px; height: 18px; color: inherit; flex: 0 0 auto; opacity: 0.75; }
 .showcase-tab-icon svg { width: 16px; height: 16px; }
+.showcase-tab-label { max-width: 88px; white-space: normal; text-align: left; line-height: 1.2; }
 .showcase-tab:hover { color: var(--ink); }
 .showcase-tab.is-active { background: var(--forest-deep); color: oklch(98% 0.01 145); }
 .showcase-tab.is-active .showcase-tab-icon { opacity: 1; color: var(--lime); }
