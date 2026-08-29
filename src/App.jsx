@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { cloneElement, useEffect, useState } from "react";
 import {
   ArrowRight,
   Battery,
@@ -29,6 +29,7 @@ const services = [
     icon: <Sun size={26} />,
     title: "Solar Installation",
     description: "Professional solar system design and installation for homes, businesses, institutions, and farms.",
+    badge: "Certified Installers",
     images: [
       ["/images/solar-installation.jpeg", "/images/solar-installation.jpg"],
       ["/images/Professional-installation-services.jpeg"],
@@ -38,6 +39,7 @@ const services = [
     icon: <Battery size={26} />,
     title: "Solar Backup Systems",
     description: "Reliable battery and backup solutions designed to keep your home or business powered when you need it most.",
+    badge: "24/7 Power Backup",
     images: [
       ["/images/solar-products.jpeg", "/images/solar-products.jpg"],
       ["/images/project-result.jpeg"],
@@ -47,6 +49,7 @@ const services = [
     icon: <Droplets size={26} />,
     title: "Solar Water Pumping",
     description: "Efficient solar-powered water pumping systems for farms, livestock, homes, and agricultural projects.",
+    badge: "Built for Farms",
     images: [
       ["/images/water-pumps.jpeg", "/images/water-pumps.jpg"],
       ["/images/showcase/water-pump-river.jpg"],
@@ -57,6 +60,7 @@ const services = [
     icon: <Wrench size={26} />,
     title: "Borehole Drilling",
     description: "Professional borehole drilling solutions that help homes, businesses, and farms access reliable water.",
+    badge: "Licensed Drilling Crew",
     images: [
       ["/images/solar-pumping-project.jpeg", "/images/solar-pumping-project.jpg"],
       ["/images/showcase/borehole-rig-truck.jpg"],
@@ -67,6 +71,7 @@ const services = [
     icon: <Zap size={26} />,
     title: "Solar Maintenance",
     description: "Inspection, troubleshooting, maintenance, and repair services to keep your solar system performing efficiently.",
+    badge: "Field-Tested Care",
     images: [
       ["/images/elitex-engineers.jpg", "/images/elitex-engineers.jpeg"],
       ["/images/sollar.education.jpeg"],
@@ -77,6 +82,7 @@ const services = [
     icon: <Leaf size={26} />,
     title: "Agro Innovation",
     description: "Practical agricultural and energy innovations designed to support productivity and sustainable farming.",
+    badge: "Smart, Sustainable Farming",
     images: [
       ["/images/services.jpeg", "/images/services.jpg"],
       ["/images/showcase/agro-drip-irrigation.jpg"],
@@ -87,6 +93,7 @@ const services = [
     icon: <Umbrella size={26} />,
     title: "Solar Shade Structures",
     description: "Elevated solar shade and carport structures that generate clean power while shading homes, yards, and farm equipment.",
+    badge: "Power Meets Shade",
     images: [
       ["/images/showcase/solar-shade-hero.jpg"],
       ["/images/showcase/solar-shade-angled.jpg"],
@@ -122,26 +129,31 @@ function SafeImage({ sources, alt, className = "" }) {
   );
 }
 
-// Cycles through a service's 2-3 photos as a filmstrip: each new photo slides
-// in from the right while the previous one slides out to the left, and a
-// small preview chip teases the next shot in the corner, like a short,
-// hand-directed product reel rather than a plain slideshow.
-function ImageStream({ images, alt, active }) {
+// Cycles through a service's 2-3 photos like a short, hand-directed shot:
+// each new photo slides in from the right while the previous one swipes
+// fully out to the left (both visible mid-swap), the incoming shot
+// materializes out of a soft blur/glow rather than snapping into focus,
+// a story-style progress rail up top shows exactly where you are in the
+// sequence and keeps filling while it's live, a small trust badge floats
+// in on the image, and a "next" chip in the corner teases the coming shot.
+// Hovering the card (paused) freezes everything in place so a single
+// frame can be studied without the reel moving on underneath it.
+function ImageStream({ images, alt, active, paused, badge, badgeIcon }) {
   const [frame, setFrame] = useState(0);
   const count = images.length;
 
   useEffect(() => {
-    if (!active || count <= 1) return undefined;
+    if (!active || paused || count <= 1) return undefined;
     const timer = setInterval(() => {
       setFrame((current) => (current + 1) % count);
     }, 4200);
     return () => clearInterval(timer);
-  }, [active, count]);
+  }, [active, paused, count]);
 
   const nextFrame = (frame + 1) % count;
 
   return (
-    <div className="stream">
+    <div className={paused ? "stream is-paused" : "stream"}>
       <div className="stream-track" style={{ transform: `translateX(-${frame * 100}%)` }}>
         {images.map((sources, i) => (
           <div key={i} className="stream-slide" aria-hidden={i !== frame}>
@@ -150,21 +162,37 @@ function ImageStream({ images, alt, active }) {
               alt={`${alt} photo ${i + 1}`}
               className={i === frame ? "stream-image is-active" : "stream-image"}
             />
+            {i === frame && <span key={frame} className="stream-sheen" aria-hidden="true" />}
           </div>
         ))}
       </div>
 
       {count > 1 && (
-        <div key={frame} className="stream-next" aria-hidden="true">
-          <SafeImage sources={images[nextFrame]} alt="" className="stream-next-img" />
+        <div className="stream-progress" aria-hidden="true">
+          {images.map((_, i) => (
+            <span
+              key={i}
+              className={
+                i < frame ? "stream-progress-seg is-done" : i === frame ? "stream-progress-seg is-active" : "stream-progress-seg"
+              }
+            >
+              <span key={i === frame ? frame : "static"} className="stream-progress-fill" />
+            </span>
+          ))}
+        </div>
+      )}
+
+      {badge && (
+        <div key={active ? "in" : "out"} className="stream-badge">
+          <span className="stream-badge-icon">{badgeIcon}</span>
+          {badge}
         </div>
       )}
 
       {count > 1 && (
-        <div className="stream-dots" aria-hidden="true">
-          {images.map((_, i) => (
-            <span key={i} className={i === frame ? "stream-dot is-active" : "stream-dot"} />
-          ))}
+        <div key={frame} className="stream-next" aria-hidden="true">
+          <SafeImage sources={images[nextFrame]} alt="" className="stream-next-img" />
+          <span className="stream-next-label">Next</span>
         </div>
       )}
     </div>
@@ -174,6 +202,7 @@ function ImageStream({ images, alt, active }) {
 function ServiceCarousel({ items, onAction }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const total = items.length;
   const autoplayMs = 5000;
 
@@ -186,6 +215,17 @@ function ServiceCarousel({ items, onAction }) {
   }, [paused, total]);
 
   const active = items[index];
+
+  // A light, physical tilt that follows the cursor across the image panel,
+  // so the floating photo card reads as something you can reach out and
+  // turn in your hand rather than a flat, static picture.
+  const handleVisualMove = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width - 0.5;
+    const py = (event.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: py * -7, y: px * 9 });
+  };
+  const resetTilt = () => setTilt({ x: 0, y: 0 });
 
   return (
     <div
@@ -221,7 +261,12 @@ function ServiceCarousel({ items, onAction }) {
           <button onClick={onAction}>Talk to Us <ArrowRight size={16} /></button>
         </div>
 
-        <div className="showcase-visual">
+        <div
+          className="showcase-visual"
+          onMouseMove={handleVisualMove}
+          onMouseLeave={resetTilt}
+          style={{ transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` }}
+        >
           <div className="showcase-visual-glow" aria-hidden="true" />
           {items.map((item, i) => (
             <div
@@ -229,7 +274,14 @@ function ServiceCarousel({ items, onAction }) {
               className={i === index ? "showcase-frame is-active" : "showcase-frame"}
               aria-hidden={i !== index}
             >
-              <ImageStream images={item.images} alt={item.title} active={i === index} />
+              <ImageStream
+                images={item.images}
+                alt={item.title}
+                active={i === index}
+                paused={paused}
+                badge={item.badge}
+                badgeIcon={cloneElement(item.icon, { size: 13 })}
+              />
             </div>
           ))}
         </div>
