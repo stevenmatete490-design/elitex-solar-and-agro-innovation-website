@@ -345,15 +345,15 @@ function App() {
             </div>
           </div>
 
-          <div className="hero-photos" aria-hidden="true">
-            <div className="hero-photo hero-photo-a">
+          <div className="hero-photo-panel" aria-hidden="true">
+            <div className="hero-photo-half">
               <SafeImage
                 sources={["/images/showcase/solar-shade-hero.jpg"]}
                 alt=""
                 className="hero-photo-img"
               />
             </div>
-            <div className="hero-photo hero-photo-b">
+            <div className="hero-photo-half">
               <SafeImage
                 sources={["/images/showcase/water-pump-river.jpg"]}
                 alt=""
