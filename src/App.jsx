@@ -632,7 +632,7 @@ function App() {
                     ["/images/whychooseus/solar-battery.jpg", "Solar Systems", Battery],
                     ["/images/whychooseus/water-pump.png", "Water Pumping", Droplets],
                     ["/images/whychooseus/borehole-drilling.jpg", "Borehole Drilling", Wrench],
-                    ["/images/showcase/agro-drip-irrigation.jpg", "Agro Innovation", Leaf],
+                    ["/images/whychooseus/agro-innovation.jpg", "Agro Innovation", Leaf],
                   ].map(([src, label, Icon]) => (
                     <div className="bento-thumb" key={label}>
                       <SafeImage sources={[src]} alt={label} className="bento-thumb-image" />
