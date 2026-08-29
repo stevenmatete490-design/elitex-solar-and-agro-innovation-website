@@ -107,27 +107,29 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .showcase-tab.is-active { background: var(--forest-deep); color: oklch(98% 0.01 145); }
 .showcase-tab.is-active .showcase-tab-icon { opacity: 1; color: var(--lime); }
 
-.showcase-stage { position: relative; min-height: 480px; border-radius: 28px; background: var(--forest-deep); overflow: hidden; box-shadow: var(--shadow-md); }
-.showcase-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 650ms var(--ease-out); }
+.showcase-stage { position: relative; min-height: 640px; border-radius: 32px; background: var(--forest-deep); overflow: hidden; box-shadow: var(--shadow-md); }
+.showcase-stage::after { content: ""; position: absolute; inset: auto 0 0 0; z-index: 2; height: 58%; background: linear-gradient(to top, oklch(11% 0.03 145 / 0.94) 0%, oklch(11% 0.03 145 / 0.6) 42%, transparent 100%); pointer-events: none; }
+.showcase-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 750ms var(--ease-out); }
 .showcase-frame.is-active { opacity: 1; z-index: 1; }
 
 .stream { position: absolute; inset: 0; }
-.stream-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; transition: opacity 900ms var(--ease-out); }
-.stream-frame.is-active { opacity: 1; z-index: 1; }
-.stream-image { width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: transform 3400ms linear; }
-.stream-frame.is-active .stream-image { transform: scale(1.07); }
-.stream-dots { position: absolute; top: 20px; right: 20px; z-index: 3; display: flex; gap: 6px; }
+.stream-frame { position: absolute; inset: 0; opacity: 0; overflow: hidden; filter: blur(10px); transform: scale(1.045); transition: opacity 950ms var(--ease-out), filter 950ms var(--ease-out), transform 1100ms var(--ease-out); }
+.stream-frame.is-active { opacity: 1; filter: blur(0); transform: scale(1); z-index: 1; }
+.stream-image { width: 100%; height: 100%; object-fit: cover; transform: scale(1); transition: transform 6000ms linear; }
+.stream-frame.is-active .stream-image { transform: scale(1.08); }
+.stream-dots { position: absolute; top: 24px; right: 24px; z-index: 3; display: flex; gap: 6px; }
 .stream-dot { width: 6px; height: 6px; border-radius: 50%; background: oklch(100% 0 0 / 0.35); transition: background 260ms var(--ease-out), transform 260ms var(--ease-out); }
 .stream-dot.is-active { background: var(--lime); transform: scale(1.35); }
 
-.showcase-overlay { position: absolute; left: 28px; right: 28px; bottom: 28px; z-index: 2; max-width: 460px; padding: 22px 24px; border: 1px solid oklch(100% 0 0 / 0.16); border-radius: 18px; background: oklch(14% 0.03 145 / 0.62); backdrop-filter: blur(16px); animation: showcaseOverlayIn 550ms var(--ease-out); }
-.showcase-overlay-index { display: block; margin-bottom: 8px; color: var(--lime); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; }
-.showcase-overlay strong { display: block; margin-bottom: 8px; font-family: var(--display-font); font-weight: 700; font-size: 1.5rem; line-height: 1.1; color: oklch(99% 0.005 145); }
-.showcase-overlay p { max-width: 42ch; margin-bottom: 14px; color: oklch(92% 0.01 145 / 0.78); font-size: 0.88rem; line-height: 1.6; }
-.showcase-overlay button { display: inline-flex; align-items: center; gap: 8px; padding: 0; border: 0; background: transparent; color: var(--lime); font-weight: 700; }
+.showcase-overlay { position: absolute; left: 36px; right: 36px; bottom: 32px; z-index: 3; max-width: 560px; animation: showcaseOverlayIn 600ms var(--ease-out); }
+.showcase-overlay-index { display: block; margin-bottom: 10px; color: var(--lime); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em; }
+.showcase-overlay strong { display: block; margin-bottom: 10px; font-family: var(--display-font); font-weight: 800; font-size: clamp(1.6rem, 2.6vw, 2.15rem); line-height: 1.08; color: oklch(99% 0.005 145); text-shadow: 0 6px 24px oklch(10% 0.03 145 / 0.5); }
+.showcase-overlay p { max-width: 46ch; margin-bottom: 20px; color: oklch(93% 0.012 145 / 0.86); font-size: 0.94rem; line-height: 1.65; text-shadow: 0 2px 12px oklch(10% 0.03 145 / 0.4); }
+.showcase-overlay button { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border: 0; border-radius: 999px; background: var(--lime); color: var(--forest-deep); font-weight: 700; box-shadow: var(--shadow-sm); transition: transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out); }
+.showcase-overlay button:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
 @keyframes showcaseFadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes showcaseOverlayIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes showcaseOverlayIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
 .why-section { background: var(--forest); color: oklch(98% 0.01 145); }
 .why-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(48px, 9vw, 128px); }
@@ -194,7 +196,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .cta-content { align-items: flex-start; flex-direction: column; }
   .showcase-tabs { width: 100%; max-width: none; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .showcase-tab { padding: 10px 16px; font-size: 0.88rem; }
-  .showcase-stage { min-height: 380px; }
+  .showcase-stage { min-height: 500px; }
 }
 
 @media (max-width: 640px) {
@@ -213,9 +215,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .primary-btn, .secondary-btn { width: 100%; }
   .about-visual, .about-media { min-height: 410px; height: 410px; }
   .image-card { right: 15px; bottom: 15px; width: 205px; padding: 18px; }
-  .showcase-stage { min-height: 300px; }
-  .showcase-overlay { left: 16px; right: 16px; bottom: 16px; padding: 16px 18px; }
-  .showcase-overlay strong { font-size: 1.25rem; }
+  .showcase-stage { min-height: 420px; }
+  .showcase-overlay { left: 20px; right: 20px; bottom: 22px; }
+  .showcase-overlay strong { font-size: 1.35rem; }
+  .showcase-overlay button { padding: 11px 18px; }
   .form-row { grid-template-columns: 1fr; }
   .contact-form { padding: 20px; }
   .footer-content { align-items: flex-start; flex-direction: column; }

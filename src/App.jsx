@@ -402,8 +402,8 @@ function App() {
           <div className="container">
             <div className="section-heading">
               <span className="section-tag">Our Services</span>
-              <h2>Offering affordable services with accredited technicians.</h2>
-              <p>From the first assessment to installation and after-sales support, our accredited technicians deliver quality work at prices that make sense for your budget. Explore each service alongside real projects from the field.</p>
+              <h2>Affordable, reliable engineering you can trust.</h2>
+              <p>We provide the best affordable, reliable engineering solutions in solar, water, and agriculture — handled end to end by accredited technicians, from first assessment through installation and after-sales support.</p>
             </div>
             <ServiceCarousel items={services} onAction={() => scrollToSection("contact")} />
           </div>
