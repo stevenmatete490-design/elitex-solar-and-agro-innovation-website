@@ -82,7 +82,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .hero-photo-circle-plain .hero-photo-img { object-fit: contain; padding: 0; }
 .about-section .hero-cabbage {
   position: absolute;
-  right: clamp(-120px, -8vw, -80px);
+  right: clamp(-60px, -4vw, -20px);
   top: 50%;
   z-index: 3;
   width: clamp(370px, 39vw, 670px);
