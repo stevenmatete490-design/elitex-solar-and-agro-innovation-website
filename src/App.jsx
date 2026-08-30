@@ -388,7 +388,6 @@ function ServiceCarousel({ items, onAction }) {
         </div>
 
         <div key={index} className="showcase-info">
-          <span className="showcase-info-index">{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
           <h3>{active.title}</h3>
           <p>{active.description}</p>
           <button onClick={onAction}>Talk to Us <ArrowRight size={16} /></button>
@@ -544,10 +543,6 @@ function App() {
               />
             </div>
           </div>
-
-          <svg className="hero-curve" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,110 C 220,180 420,10 720,70 C 1020,130 1180,150 1440,90 L1440,180 L0,180 Z" fill="var(--paper)" />
-          </svg>
         </section>
 
         <section id="about" className="section about-section">
