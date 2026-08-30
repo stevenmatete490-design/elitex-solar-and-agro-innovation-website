@@ -543,35 +543,22 @@ function App() {
                 className="hero-photo-img"
               />
             </div>
-            <div className="hero-photo-circle hero-photo-circle-xs hero-photo-circle-product">
-              <SafeImage
-                sources={["/images/cabbage.png"]}
-                alt=""
-                className="hero-photo-img"
-              />
-            </div>
           </div>
 
-          <svg className="hero-curve" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0,42 C 320,110 1120,-30 1440,42 L1440,100 L0,100 Z" fill="var(--paper)" />
+          <svg className="hero-curve" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,110 C 220,180 420,10 720,70 C 1020,130 1180,150 1440,90 L1440,180 L0,180 Z" fill="var(--paper)" />
           </svg>
         </section>
 
         <section id="about" className="section about-section">
+          <div className="hero-cabbage" aria-hidden="true">
+            <SafeImage
+              sources={["/images/cabbage.png"]}
+              alt=""
+              className="hero-cabbage-img"
+            />
+          </div>
           <div className="container about-grid">
-            <div className="about-visual">
-              <SafeImage
-                sources={["/images/about-team.jpeg", "/images/about-team.jpg"]}
-                alt="Elitex team working on a solar and agro project"
-                className="about-media"
-              />
-              <div className="image-card">
-                <Sun size={32} />
-                <strong>ELITEX</strong>
-                <span>Solar & Agro Innovations</span>
-              </div>
-            </div>
-
             <div className="about-content">
               <span className="section-tag">About Elitex</span>
               <h2>Reliable solutions for energy, <em>water and agriculture.</em></h2>

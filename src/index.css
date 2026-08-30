@@ -60,13 +60,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .nav-cta:hover, .primary-btn:hover, .white-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
 .menu-button { display: none; min-width: 44px; min-height: 44px; margin-left: auto; border: 0; background: transparent; color: oklch(98% 0.01 145); }
 
-.hero { position: relative; min-height: 730px; display: flex; align-items: center; padding: 136px 0 72px; isolation: isolate; background: var(--forest-deep); color: oklch(98% 0.01 145); overflow: hidden; }
+.hero { position: relative; min-height: 730px; display: flex; align-items: center; padding: 136px 0 120px; margin-bottom: -18px; isolation: isolate; background: var(--forest-deep); color: oklch(98% 0.01 145); overflow: visible; }
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background-image: linear-gradient(135deg, oklch(15% 0.055 145) 0%, var(--forest-deep) 46%, oklch(24% 0.065 145) 100%); }
 .hero::after { content: ""; position: absolute; inset: auto -10% -44% 48%; z-index: -1; height: 70%; border-radius: 50%; background: oklch(78% 0.17 112 / 0.13); filter: blur(1px); }
 .hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr); align-items: end; gap: 70px; }
-.hero-copy { max-width: 800px; }
+.hero-copy { position: relative; z-index: 4; max-width: 800px; padding-bottom: 28px; }
 
-.hero-curve { position: absolute; inset: auto 0 0 0; z-index: 1; width: 100%; height: clamp(48px, 8vw, 90px); pointer-events: none; }
+.hero-curve { position: absolute; inset: auto 0 -52px 0; z-index: 1; width: 100%; height: clamp(170px, 20vw, 240px); pointer-events: none; }
+
+.about-section { position: relative; z-index: 1; margin-top: 8px; overflow: visible; background: var(--paper); }
+.about-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); align-items: center; gap: clamp(48px, 8vw, 112px); }
+.about-content { position: relative; z-index: 4; }
 .hero-photo-cluster { position: absolute; right: clamp(20px, 6vw, 90px); top: 50%; transform: translateY(-48%); z-index: 3; width: clamp(300px, 30vw, 440px); height: clamp(300px, 30vw, 440px); }
 .hero-photo-circle { position: absolute; border-radius: 50%; overflow: hidden; border: 7px solid var(--paper); background: var(--forest-deep); box-shadow: var(--shadow-md); }
 .hero-photo-circle-lg { width: 70%; height: 70%; top: 11%; left: 7%; z-index: 2; }
@@ -76,16 +80,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .hero-photo-img { width: 100%; height: 100%; object-fit: cover; }
 .hero-photo-circle-product { background: var(--paper); }
 .hero-photo-circle-product .hero-photo-img { object-fit: contain; padding: 6%; box-sizing: border-box; }
+.hero-photo-circle-plain { background: transparent; border: none; box-shadow: none; border-radius: 0; overflow: visible; }
+.hero-photo-circle-plain .hero-photo-img { object-fit: contain; padding: 0; }
+.about-section .hero-cabbage { position: absolute; right: clamp(10px, 2.8vw, 26px); top: clamp(30px, 2vw, 70px); z-index: 3; width: clamp(370px, 39vw, 670px); pointer-events: none; transform: translateX(36px); }
+.hero-cabbage-img { display: block; width: 100%; height: auto; object-fit: contain; }
 .hero h1 { max-width: 850px; font-size: clamp(3.1rem, 7vw, 6.8rem); line-height: 0.98; letter-spacing: -0.02em; }
 .hero h1 em { color: var(--lime); }
 .hero-copy > p { max-width: 58ch; margin-top: 28px; color: oklch(94% 0.012 145 / 0.76); font-size: 1.05rem; line-height: 1.75; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+.hero-actions { position: relative; z-index: 4; display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
 .primary-btn { background: var(--lime); color: var(--forest-deep); }
 .secondary-btn { min-height: 52px; padding: 0 21px; border: 1px solid oklch(100% 0 0 / 0.35); border-radius: 999px; background: transparent; color: oklch(98% 0.01 145); font-weight: 700; transition: background 180ms var(--ease-out), border-color 180ms var(--ease-out); }
 .secondary-btn:hover { border-color: var(--lime); background: oklch(100% 0 0 / 0.08); }
 
-.about-section { background: var(--paper); }
-.about-grid { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); align-items: center; gap: clamp(48px, 8vw, 112px); }
+.about-section { position: relative; z-index: 1; overflow: visible; background: var(--paper); }
+.about-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); align-items: center; gap: clamp(48px, 8vw, 112px); }
 .about-visual { position: relative; min-height: 535px; }
 .about-media { width: 100%; height: 535px; border-radius: var(--radius-lg); object-fit: cover; box-shadow: var(--shadow-md); }
 .image-card { position: absolute; right: 24px; bottom: 24px; width: min(240px, calc(100% - 48px)); padding: 22px; border-radius: 14px; background: var(--paper); box-shadow: var(--shadow-md); }
@@ -293,7 +301,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .hero { min-height: 800px; }
   .hero-content { gap: 42px; }
   .hero-photo-cluster { width: clamp(170px, 24vw, 220px); height: clamp(170px, 24vw, 220px); top: auto; bottom: 22px; right: 20px; transform: none; }
+  .hero-cabbage { width: clamp(260px, 36vw, 390px); top: clamp(330px, 42vw, 380px); transform: translateX(12px); }
   .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 52px; }
+  .about-content { max-width: 100%; }
   .cta-content { align-items: flex-start; flex-direction: column; }
   .showcase-tabs { width: 100%; max-width: none; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .showcase-tab { padding: 10px 16px; font-size: 0.88rem; }
@@ -317,6 +327,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .hero-copy > p { font-size: 0.98rem; }
   .hero-actions { align-items: stretch; flex-direction: column; }
   .hero-photo-cluster { display: none; }
+  .hero-cabbage { display: none; }
   .primary-btn, .secondary-btn { width: 100%; }
   .about-visual, .about-media { min-height: 410px; height: 410px; }
   .image-card { right: 15px; bottom: 15px; width: 205px; padding: 18px; }
